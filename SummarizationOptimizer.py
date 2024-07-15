@@ -2402,9 +2402,8 @@ class Transform_All_Algorithm:
     }
 
   def transform(self,df,length_result=0,preprocessing = True, weigth=[]):
-    weigth = np.array(weigth)
     if preprocessing or self.df_fit is None:
-       print("Preprocessing Running")
+      print("Preprocessing Running")
       self.df_fit   = self.Preprocessing_Transform.transform(df)
     bat           = self.Model_Group #Mengambil Model Terbaik Yang sebelumnya disimpan
 
@@ -2428,6 +2427,8 @@ class Transform_All_Algorithm:
       data = topik_data.iloc[[index]]
 
       print("Start Transforming")
+      if weigth != []:
+        weigth = np.array(weigth)
       fitnes,tso_result = bat.transform(self.df_fit.copy(),k = length_result, weigth = weigth)
       print("End Transforming")
 
