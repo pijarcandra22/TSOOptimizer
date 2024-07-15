@@ -2403,6 +2403,7 @@ class Transform_All_Algorithm:
 
   def transform(self,df,length_result=0,preprocessing = True, weigth=[]):
     if preprocessing or self.df_fit is None:
+      print("Preprocessing Running")
       self.df_fit   = self.Preprocessing_Transform.transform(df)
     bat           = self.Model_Group #Mengambil Model Terbaik Yang sebelumnya disimpan
 
