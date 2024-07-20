@@ -2401,8 +2401,8 @@ class Transform_All_Algorithm:
       'rouge3':scores['rouge3'].precision
     }
 
-  def transform(self,df,length_result=0,preprocessing = True, weigth=[]):
-    if preprocessing or self.df_fit is None:
+  def transform(self,df,length_result=0,preprocessing = True, weigth=[], answer_form = "standard"):
+    if preprocessing and self.df_fit is None:
       print("Preprocessing Running")
       self.df_fit   = self.Preprocessing_Transform.transform(df)
     bat           = self.Model_Group #Mengambil Model Terbaik Yang sebelumnya disimpan
@@ -2434,7 +2434,14 @@ class Transform_All_Algorithm:
 
       if length_result==0:
         length_result = len(data['Ringkasan_Sample'].values[0].split(". "))
-      text,result_table = bat.sortResult(tso_result,length_result)
+      
+      text = None
+      result_table = None
+      if answer_form == "standard":
+        text,result_table = bat.sortResult(tso_result,length_result)
+      elif answer_form == "weight":
+        result_df = tso_result.sort_values(by=['final_point'],ascending=False).iloc[:length_result,:]
+        text,result_table = ". ".join(result_df.sort_values(by=['final_point'],ascending=False)['teks'].values.tolist()),result_df
 
       result_dict["Topik_Name"].append(data['Topik_Name'].values[0])
       result_dict["Result"].append(text)
