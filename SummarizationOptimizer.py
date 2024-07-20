@@ -2427,7 +2427,7 @@ class Transform_All_Algorithm:
       data = topik_data.iloc[[index]]
 
       print("Start Transforming")
-      if len(weigth) == 0:
+      if len(weigth) != 0:
         weigth = np.array(weigth)
       fitnes,tso_result = bat.transform(self.df_fit.copy(),k = length_result, weigth = weigth)
       print("End Transforming")
