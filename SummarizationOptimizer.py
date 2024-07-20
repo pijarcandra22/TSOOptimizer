@@ -2403,11 +2403,17 @@ class Transform_All_Algorithm:
     }
 
   def transform(self,df,length_result=0,preprocessing = True, weigth=[], answer_form = "standard"):
+    global DataFrame_Fit
     if preprocessing:
       print("Preprocessing Running")
       self.df_fit   = self.Preprocessing_Transform.transform(df)
+      DataFrame_Fit = self.df_fit
     else:
-      self.df_fit   = df
+      try:
+        self.df_fit   = DataFrame_Fit
+      except:
+        self.df_fit   = self.Preprocessing_Transform.transform(df)
+        DataFrame_Fit = self.df_fit
     bat           = self.Model_Group #Mengambil Model Terbaik Yang sebelumnya disimpan
 
     #Deklarasi Variabel Penyimpan Hasil per Topik
