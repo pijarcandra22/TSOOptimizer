@@ -5,6 +5,7 @@ import nltk
 import emoji
 import math
 import operator
+import copy
 
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
