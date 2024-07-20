@@ -799,7 +799,7 @@ class Tuna_Swamp_Optimizer:
     self.df['final_point'] = np.array(epoch_record)
 
   def transform(self,df_new,k=0,weigth=[]):
-    if len(weigth) != 0:
+    if len(weigth) == 0:
       weigth = self.w_best
     epoch_record = []
     fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
@@ -1111,7 +1111,7 @@ class Bat_Optimizer:
     self.df['final_point'] = np.array(epoch_record)
 
   def transform(self,df_new,k=0,weigth=[]):
-    if len(weigth) != 0:
+    if len(weigth) == 0:
       weigth = self.w_best
     epoch_record = []
     fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
@@ -1449,7 +1449,7 @@ class IWO_Optimizer:
     self.df['final_point'] = np.array(epoch_record)
 
   def transform(self,df_new,k=0,weigth=[]):
-    if len(weigth) != 0:
+    if len(weigth) == 0:
       weigth = self.w_best
     epoch_record = []
     fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
@@ -1678,7 +1678,7 @@ class PSO_Optimizer:
     self.df['final_point'] = np.array(epoch_record)
 
   def transform(self,df_new,k=0,weigth=[]):
-    if len(weigth) != 0:
+    if len(weigth) == 0:
       weigth = self.w_best
     epoch_record = []
     fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
@@ -1925,7 +1925,7 @@ class ABC_Optimizer:
     self.df['final_point'] = np.array(epoch_record)
 
   def transform(self,df_new,k=0,weigth=[]):
-    if len(weigth) != 0:
+    if len(weigth) == 0:
       weigth = self.w_best
     epoch_record = []
     fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
@@ -2236,7 +2236,7 @@ class Whale_Optimizer(WOA):
     self.df['final_point'] = np.array(epoch_record)
 
   def transform(self,df_new,k=0,weigth=[]):
-    if len(weigth) != 0:
+    if len(weigth) == 0:
       weigth = self.w_best
     epoch_record = []
     fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
@@ -2432,7 +2432,7 @@ class Transform_All_Algorithm:
       print("Start Transforming")
       if len(weigth) != 0:
         weigth = np.array(weigth)
-        print(self.df_fit)
+        print("Sudah Masuk")
       fitnes,tso_result = bat.transform(self.df_fit.copy(),k = length_result, weigth = weigth)
       print("End Transforming")
 
