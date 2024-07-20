@@ -700,7 +700,7 @@ class Tuna_Swamp_Optimizer:
 
     self.epoch     = epoch #T_Max
     self.df        = dataframe #Hasil ringkasann(TSO)
-    self.condition = (sum([sin_conv,treshhold,markov]))
+    self.condition = sum([treshhold,markov])
     self.fitur     = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w         = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history = {}
@@ -1016,7 +1016,7 @@ class Bat_Optimizer:
 
     self.epoch      = epoch #T_Max
     self.df         = dataframe #Hasil ringkasann(TSO)
-    self.condition  = (sum([sin_conv,treshhold,markov]))
+    self.condition  = sum([treshhold,markov])
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.NP, self.D = self.fitur.shape
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
@@ -1250,7 +1250,7 @@ class IWO_Optimizer:
 
     self.epoch      = epoch #T_Max
     self.df         = dataframe #Hasil ringkasann(TSO)
-    self.condition  = (sum([sin_conv,treshhold,markov]))
+    self.condition  = sum([treshhold,markov])
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history  = {}
@@ -1587,7 +1587,7 @@ class PSO_Optimizer:
 
     self.epoch      = epoch #T_Max
     self.df         = dataframe #Hasil ringkasann(TSO)
-    self.condition  = (sum([sin_conv,treshhold,markov]))
+    self.condition  = sum([treshhold,markov])
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history  = {}
@@ -1817,7 +1817,7 @@ class ABC_Optimizer:
 
     self.epoch      = epoch #T_Max
     self.df         = dataframe #Hasil ringkasann(TSO)
-    self.condition  = (sum([sin_conv,treshhold,markov]))
+    self.condition  = sum([treshhold,markov])
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history  = {}
@@ -2138,7 +2138,7 @@ class Whale_Optimizer(WOA):
 
     self.epoch      = epoch #T_Max
     self.df         = dataframe #Hasil ringkasann(TSO)
-    self.condition  = (sum([sin_conv,treshhold,markov]))
+    self.condition  = sum([treshhold,markov])
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history  = {}
