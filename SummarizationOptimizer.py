@@ -815,11 +815,12 @@ class Tuna_Swamp_Optimizer:
     text_result_clean = df_new.sort_values(by=['final_point'],ascending=False)[:long_text_test]['cleanTeks'].values.tolist()
     text_result       = self.sortResult(df_new,long_text_test)[0].split(". ")
     
-    fitnes = []
-    for text in range(long_text_test):
-      fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
+    # fitnes = []
+    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
+    # for text in range(long_text_test):
+    #   fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
 
-    return np.mean(fitnes),df_new
+    return fitnes,df_new
 
   def sortResult(self,urut,lenText):
     useData = urut.loc[:,['title','teks','final_point']+[i for i in urut.keys() if 'Document Number ' in i]]
@@ -1126,11 +1127,13 @@ class Bat_Optimizer:
 
     text_result_clean = df_new.sort_values(by=['final_point'],ascending=False)[:long_text_test]['cleanTeks'].values.tolist()
     text_result       = self.sortResult(df_new,long_text_test)[0].split(". ")
-    fitnes = []
-    for text in range(long_text_test):
-      fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
-
-    return np.mean(fitnes),df_new
+    
+    # fitnes = []
+    # for text in range(long_text_test):
+    #   fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
+    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
+    
+    return fitnes,df_new
 
   def sortResult(self,urut,lenText):
     useData = urut.loc[:,['title','teks','final_point']+[i for i in urut.keys() if 'Document Number ' in i]]
@@ -1464,11 +1467,12 @@ class IWO_Optimizer:
 
     text_result_clean = df_new.sort_values(by=['final_point'],ascending=False)[:long_text_test]['cleanTeks'].values.tolist()
     text_result       = self.sortResult(df_new,long_text_test)[0].split(". ")
-    fitnes = []
-    for text in range(long_text_test):
-      fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
+    # fitnes = []
+    # for text in range(long_text_test):
+    #   fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
+    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
 
-    return np.mean(fitnes),df_new
+    return fitnes,df_new
 
   def sortResult(self,urut,lenText):
     useData = urut.loc[:,['title','teks','final_point']+[i for i in urut.keys() if 'Document Number ' in i]]
@@ -1693,11 +1697,12 @@ class PSO_Optimizer:
 
     text_result_clean = df_new.sort_values(by=['final_point'],ascending=False)[:long_text_test]['cleanTeks'].values.tolist()
     text_result       = self.sortResult(df_new,long_text_test)[0].split(". ")
-    fitnes = []
-    for text in range(long_text_test):
-      fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
+    # fitnes = []
+    # for text in range(long_text_test):
+    #   fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
+    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
 
-    return np.mean(fitnes),df_new
+    return fitnes,df_new
 
   def sortResult(self,urut,lenText):
     useData = urut.loc[:,['title','teks','final_point']+[i for i in urut.keys() if 'Document Number ' in i]]
@@ -1940,11 +1945,12 @@ class ABC_Optimizer:
 
     text_result_clean = df_new.sort_values(by=['final_point'],ascending=False)[:long_text_test]['cleanTeks'].values.tolist()
     text_result       = self.sortResult(df_new,long_text_test)[0].split(". ")
-    fitnes = []
-    for text in range(long_text_test):
-      fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
+    # fitnes = []
+    # for text in range(long_text_test):
+    #   fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
+    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
 
-    return np.mean(fitnes),df_new
+    return fitnes,df_new
 
   def sortResult(self,urut,lenText):
     useData = urut.loc[:,['title','teks','final_point']+[i for i in urut.keys() if 'Document Number ' in i]]
@@ -2251,11 +2257,12 @@ class Whale_Optimizer(WOA):
 
     text_result_clean = df_new.sort_values(by=['final_point'],ascending=False)[:long_text_test]['cleanTeks'].values.tolist()
     text_result       = self.sortResult(df_new,long_text_test)[0].split(". ")
-    fitnes = []
-    for text in range(long_text_test):
-      fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
+    # fitnes = []
+    # for text in range(long_text_test):
+    #   fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
+    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
 
-    return np.mean(fitnes),df_new
+    return fitnes,df_new
 
   def sortResult(self,urut,lenText):
     useData = urut.loc[:,['title','teks','final_point']+[i for i in urut.keys() if 'Document Number ' in i]]
@@ -2459,20 +2466,12 @@ class Transform_All_Algorithm:
       result_dict["Table_Result"].append(result_table)
       result_dict["Opt_Result"].append(tso_result)
 
-      total_score = {
-        "rouge1"    :[],
-        "rouge2"    :[],
-        "rouge3"    :[]
-      }
-      for t in range(length_result):
-        scores = self.similarity_check_rogue(data['Ringkasan_Sample'].values[0].split(". ")[t],text.split(". ")[t])
-        total_score["rouge1"].append(scores['rouge1'])
-        total_score["rouge2"].append(scores['rouge2'])
-        total_score["rouge3"].append(scores['rouge3'])
+      # for t in range(length_result):
+      scores = self.similarity_check_rogue(data['Ringkasan_Sample'].values[0],text)
 
-      result_dict["rouge1"].append(np.mean(total_score['rouge1']))
-      result_dict["rouge2"].append(np.mean(total_score['rouge2']))
-      result_dict["rouge3"].append(np.mean(total_score['rouge3']))
+      result_dict["rouge1"].append(scores['rouge1'])
+      result_dict["rouge2"].append(scores['rouge2'])
+      result_dict["rouge3"].append(scores['rouge3'])
       result_dict["coherence"].append(self.get_coherence(text.split(". ")))
 
     return result_dict
