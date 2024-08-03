@@ -760,12 +760,14 @@ class Tuna_Swamp_Optimizer:
           self.w_best = w
           self.f_best = fitnes
           self.result_best = '. '.join(text_result)
+          self.best_epoch = 'epoch_'+str(epoch)+'_tuna_'+str(tuna)
         else:
           #Revisi Weigth dan Fitness
           if fitnes>self.f_best:
             self.w_best = w
             self.f_best = fitnes
             self.result_best = '. '.join(text_result)
+            self.best_epoch = 'epoch_'+str(epoch)+'_tuna_'+str(tuna)
 
 
       self.a1 = self.alpha+(1-self.alpha)*(epoch/self.epoch)
@@ -1099,12 +1101,14 @@ class Bat_Optimizer:
           self.w_best = w
           self.f_best = fitnes
           self.result_best = '. '.join(text_result)
+          self.best_epoch = 'epoch_'+str(epoch)+'_tuna_'+str(tuna)
         else:
           #Revisi Weigth dan Fitness
           if fitnes>self.f_best:
             self.w_best = w
             self.f_best = fitnes
             self.result_best = '. '.join(text_result)
+            self.best_epoch = 'epoch_'+str(epoch)+'_tuna_'+str(tuna)
 
     epoch_record = []
     for data in range(len(self.df)):
@@ -1439,12 +1443,14 @@ class IWO_Optimizer:
           self.w_best = w
           self.f_best = fitnes
           self.result_best = '. '.join(text_result)
+          self.best_epoch = 'epoch_'+str(epoch)+'_tuna_'+str(tuna)
         else:
           #Revisi Weigth dan Fitness
           if fitnes>self.f_best:
             self.w_best = w
             self.f_best = fitnes
             self.result_best = '. '.join(text_result)
+            self.best_epoch = 'epoch_'+str(epoch)+'_tuna_'+str(tuna)
 
     epoch_record = []
     for data in range(len(self.df)):
@@ -1669,12 +1675,14 @@ class PSO_Optimizer:
           self.w_best = w
           self.f_best = fitnes
           self.result_best = '. '.join(text_result)
+          self.best_epoch = 'epoch_'+str(epoch)+'_tuna_'+str(tuna)
         else:
           #Revisi Weigth dan Fitness
           if fitnes>self.f_best:
             self.w_best = w
             self.f_best = fitnes
             self.result_best = '. '.join(text_result)
+            self.best_epoch = 'epoch_'+str(epoch)+'_tuna_'+str(tuna)
 
     epoch_record = []
     for data in range(len(self.df)):
@@ -1917,12 +1925,14 @@ class ABC_Optimizer:
           self.w_best = w
           self.f_best = fitnes
           self.result_best = '. '.join(text_result)
+          self.best_epoch = 'epoch_'+str(epoch)+'_tuna_'+str(tuna)
         else:
           #Revisi Weigth dan Fitness
           if fitnes>self.f_best:
             self.w_best = w
             self.f_best = fitnes
             self.result_best = '. '.join(text_result)
+            self.best_epoch = 'epoch_'+str(epoch)+'_tuna_'+str(tuna)
 
     epoch_record = []
     for data in range(len(self.df)):
@@ -2229,12 +2239,14 @@ class Whale_Optimizer(WOA):
           self.w_best = w
           self.f_best = fitnes
           self.result_best = '. '.join(text_result)
+          self.best_epoch = 'epoch_'+str(epoch)+'_tuna_'+str(tuna)
         else:
           #Revisi Weigth dan Fitness
           if fitnes>self.f_best:
             self.w_best = w
             self.f_best = fitnes
             self.result_best = '. '.join(text_result)
+            self.best_epoch = 'epoch_'+str(epoch)+'_tuna_'+str(tuna)
 
     epoch_record = []
     for data in range(len(self.df)):
@@ -2461,8 +2473,8 @@ class Transform_All_Algorithm:
       if answer_form == "standard":
         text,result_table = bat.sortResult(tso_result,length_result)
       elif answer_form == "weight":
-        result_df = tso_result.sort_values(by=['final_point'],ascending=False).iloc[:length_result,:]
-        text,result_table = ". ".join(result_df['teks'].values.tolist()),result_df
+        result_df = tso_result.sort_values(by=[bat.best_epoch],ascending=False)
+        text,result_table = ". ".join(result_df[:length_result]['teks'].values.tolist()),result_df
 
       result_dict["Topik_Name"].append(data['Topik_Name'].values[0])
       result_dict["Result"].append(text)
