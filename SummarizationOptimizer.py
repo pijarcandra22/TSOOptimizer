@@ -2462,7 +2462,7 @@ class Transform_All_Algorithm:
         text,result_table = bat.sortResult(tso_result,length_result)
       elif answer_form == "weight":
         result_df = tso_result.sort_values(by=['final_point'],ascending=False).iloc[:length_result,:]
-        text,result_table = ". ".join(result_df.sort_values(by=['final_point'],ascending=False)['teks'].values.tolist()),result_df
+        text,result_table = ". ".join(result_df['teks'].values.tolist()),result_df
 
       result_dict["Topik_Name"].append(data['Topik_Name'].values[0])
       result_dict["Result"].append(text)
