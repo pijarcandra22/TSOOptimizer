@@ -797,6 +797,7 @@ class Tuna_Swamp_Optimizer:
     for data in range(len(self.df)):
       epoch_record.append(sum(self.fitur.loc[[data]].values.flatten()*self.w_best))
     self.df['final_point'] = np.array(epoch_record)
+    self.f_best = self.transform(self.df)[0]
 
   def transform(self,df_new,k=0,weigth=[]):
     if len(weigth) == 0:
