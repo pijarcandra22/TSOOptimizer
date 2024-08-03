@@ -2406,7 +2406,8 @@ class Transform_All_Algorithm:
     return {
       'rouge1':scores['rouge1'].precision,
       'rouge2':scores['rouge2'].precision,
-      'rouge3':scores['rouge3'].precision
+      'rouge3':scores['rouge3'].precision,
+      'rougeL':scores['rougeL'].precision
     }
 
   def transform(self,df,length_result=0,preprocessing = True, weigth=[], answer_form = "standard"):
@@ -2430,6 +2431,7 @@ class Transform_All_Algorithm:
         "rouge1"    :[],
         "rouge2"    :[],
         "rouge3"    :[],
+        "rougeL"    :[],
         "coherence" :[],
         "Result"       :[],
         "Table_Result" :[],
@@ -2473,6 +2475,7 @@ class Transform_All_Algorithm:
       result_dict["rouge1"].append(scores['rouge1'])
       result_dict["rouge2"].append(scores['rouge2'])
       result_dict["rouge3"].append(scores['rouge3'])
+      result_dict["rougeL"].append(scores['rougeL'])
       result_dict["coherence"].append(self.get_coherence(text.split(". ")))
 
     return result_dict
