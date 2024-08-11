@@ -939,7 +939,7 @@ class TSO_Multi_DocCombine(PreprocessTuna,Tuna_Swamp_Optimizer):
 
     self.Model_Group = None
 
-  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing = True):
+  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing = True,w_best = [], f_best = 0.0):
 
     global PreProcessDataTrain
     if preprocessing: 
@@ -951,9 +951,6 @@ class TSO_Multi_DocCombine(PreprocessTuna,Tuna_Swamp_Optimizer):
       except:
         self.Preprocessing_Transform = PreprocessTuna(df = self.dataframe, sin_conv=sin_conv,treshhold = treshhold,markov = markov,tfidf = tfidf,tfidf_compress = tfidf_compress)
         PreProcessDataTrain =  self.Preprocessing_Transform
-    
-    w_best = []
-    f_best=[]
 
     for t in self.topic: #Membaca Data tiap Topik
       self.TsoModel['Topik_Name'].append(t)
@@ -1175,7 +1172,7 @@ class Bat_Multi_DocCombine(PreprocessTuna,Bat_Optimizer):
 
     self.Model_Group = None
 
-  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True):
+  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0):
     global PreProcessDataTrain
     if preprocessing: 
       self.Preprocessing_Transform = PreprocessTuna(df = self.dataframe, sin_conv=sin_conv,treshhold = treshhold,markov = markov,tfidf = tfidf,tfidf_compress = tfidf_compress)
@@ -1188,9 +1185,6 @@ class Bat_Multi_DocCombine(PreprocessTuna,Bat_Optimizer):
         print("gagal mengambil tempat")
         self.Preprocessing_Transform = PreprocessTuna(df = self.dataframe, sin_conv=sin_conv,treshhold = treshhold,markov = markov,tfidf = tfidf,tfidf_compress = tfidf_compress)
         PreProcessDataTrain =  self.Preprocessing_Transform
-    
-    w_best = []
-    f_best=[]
 
     for t in self.topic: #Membaca Data tiap Topik
       self.Model['Topik_Name'].append(t)
@@ -1514,7 +1508,7 @@ class IWO_Multi_DocCombine(PreprocessTuna,IWO_Optimizer):
 
     self.Model_Group = None
 
-  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing = True):
+  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing = True, w_best = [], f_best = 0.0):
 
     global PreProcessDataTrain
     if preprocessing: 
@@ -1526,9 +1520,6 @@ class IWO_Multi_DocCombine(PreprocessTuna,IWO_Optimizer):
       except:
         self.Preprocessing_Transform = PreprocessTuna(df = self.dataframe, sin_conv=sin_conv,treshhold = treshhold,markov = markov,tfidf = tfidf,tfidf_compress = tfidf_compress)
         PreProcessDataTrain =  self.Preprocessing_Transform
-
-    w_best = []
-    f_best = 0
 
     for t in self.topic: #Membaca Data tiap Topik
       self.Model['Topik_Name'].append(t)
@@ -1744,7 +1735,7 @@ class PSO_Multi_DocCombine(PreprocessTuna,PSO_Optimizer):
 
     self.Model_Group = None
 
-  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True):
+  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0):
     
     global PreProcessDataTrain
     if preprocessing: 
@@ -1756,9 +1747,6 @@ class PSO_Multi_DocCombine(PreprocessTuna,PSO_Optimizer):
       except:
         self.Preprocessing_Transform = PreprocessTuna(df = self.dataframe, sin_conv=sin_conv,treshhold = treshhold,markov = markov,tfidf = tfidf,tfidf_compress = tfidf_compress)
         PreProcessDataTrain =  self.Preprocessing_Transform
-
-    w_best = []
-    f_best= 0.0
 
     for t in self.topic: #Membaca Data tiap Topik
       self.Model['Topik_Name'].append(t)
@@ -1992,7 +1980,7 @@ class ABC_Multi_DocCombine(PreprocessTuna,ABC_Optimizer):
 
     self.Model_Group = None
 
-  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True):
+  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0):
     global PreProcessDataTrain
     if preprocessing: 
       self.Preprocessing_Transform = PreprocessTuna(df = self.dataframe, sin_conv=sin_conv,treshhold = treshhold,markov = markov,tfidf = tfidf,tfidf_compress = tfidf_compress)
@@ -2003,9 +1991,6 @@ class ABC_Multi_DocCombine(PreprocessTuna,ABC_Optimizer):
       except:
         self.Preprocessing_Transform = PreprocessTuna(df = self.dataframe, sin_conv=sin_conv,treshhold = treshhold,markov = markov,tfidf = tfidf,tfidf_compress = tfidf_compress)
         PreProcessDataTrain =  self.Preprocessing_Transform
-    
-    w_best = []
-    f_best = 0.0
 
     for t in self.topic: #Membaca Data tiap Topik
       self.Model['Topik_Name'].append(t)
@@ -2304,7 +2289,7 @@ class Whale_Multi_DocCombine(PreprocessTuna,Whale_Optimizer):
 
     self.Model_Group = None
 
-  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True):
+  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0):
     global PreProcessDataTrain
     if preprocessing: 
       self.Preprocessing_Transform = PreprocessTuna(df = self.dataframe, sin_conv=sin_conv,treshhold = treshhold,markov = markov,tfidf = tfidf,tfidf_compress = tfidf_compress)
@@ -2315,9 +2300,6 @@ class Whale_Multi_DocCombine(PreprocessTuna,Whale_Optimizer):
       except:
         self.Preprocessing_Transform = PreprocessTuna(df = self.dataframe, sin_conv=sin_conv,treshhold = treshhold,markov = markov,tfidf = tfidf,tfidf_compress = tfidf_compress)
         PreProcessDataTrain =  self.Preprocessing_Transform
-
-    w_best = []
-    f_best=0.0
 
     for t in self.topic: #Membaca Data tiap Topik
       self.Model['Topik_Name'].append(t)
