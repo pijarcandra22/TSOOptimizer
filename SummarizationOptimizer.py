@@ -692,7 +692,7 @@ class PreprocessTuna(FeatureExtraction):
       return df_fiks.fillna(0)
 
 class Tuna_Swamp_Optimizer:
-  def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[]):
+  def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[], num_markov = 8):
     if treshhold:
       dataframe = dataframe[dataframe['DropFromDf']==True].reset_index(drop=True)
     if markov:
@@ -700,7 +700,9 @@ class Tuna_Swamp_Optimizer:
 
     self.epoch     = epoch #T_Max
     self.df        = dataframe #Hasil ringkasann(TSO)
-    self.condition = sum([treshhold,markov])
+    self.condition  = 1
+    if num_markov == 9:
+      self.condition = 2 
     self.fitur     = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w         = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history = {}
@@ -939,7 +941,7 @@ class TSO_Multi_DocCombine(PreprocessTuna,Tuna_Swamp_Optimizer):
 
     self.Model_Group = None
 
-  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing = True,w_best = [], f_best = 0.0):
+  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing = True,w_best = [], f_best = 0.0,num_markov=num_markov):
 
     global PreProcessDataTrain
     if preprocessing: 
@@ -958,7 +960,7 @@ class TSO_Multi_DocCombine(PreprocessTuna,Tuna_Swamp_Optimizer):
       data     = self.dataframe[self.dataframe['Topik']==t].copy().reset_index(drop=True)
       data     = data['ringkasan'].values[0]
       self.TsoModel['Ringkasan_Sample'].append(data)
-      tunaswam = Tuna_Swamp_Optimizer(epoch,tuna,self.Preprocessing_Transform.df_to_TSO,data,sin_conv=sin_conv,treshhold = treshhold, markov = markov,a = a,z = z,w_best=w_best,f_best=f_best)
+      tunaswam = Tuna_Swamp_Optimizer(epoch,tuna,self.Preprocessing_Transform.df_to_TSO,data,sin_conv=sin_conv,treshhold = treshhold, markov = markov,a = a,z = z,w_best=w_best,f_best=f_best,num_markov=num_markov)
       tunaswam.fit()
 
       w_best = tunaswam.w_best
@@ -1007,7 +1009,7 @@ class TSO_Multi_DocCombine(PreprocessTuna,Tuna_Swamp_Optimizer):
 
 
 class Bat_Optimizer:
-  def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[]):
+  def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[], num_markov = 8):
     if treshhold:
       dataframe = dataframe[dataframe['DropFromDf']==True].reset_index(drop=True)
     if markov:
@@ -1015,7 +1017,9 @@ class Bat_Optimizer:
 
     self.epoch      = epoch #T_Max
     self.df         = dataframe #Hasil ringkasann(TSO)
-    self.condition  = sum([treshhold,markov])
+    self.condition  = 1
+    if num_markov == 9:
+      self.condition = 2 
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.NP, self.D = self.fitur.shape
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
@@ -1172,7 +1176,7 @@ class Bat_Multi_DocCombine(PreprocessTuna,Bat_Optimizer):
 
     self.Model_Group = None
 
-  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0):
+  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0,num_markov=num_markov):
     global PreProcessDataTrain
     if preprocessing: 
       self.Preprocessing_Transform = PreprocessTuna(df = self.dataframe, sin_conv=sin_conv,treshhold = treshhold,markov = markov,tfidf = tfidf,tfidf_compress = tfidf_compress)
@@ -1192,7 +1196,7 @@ class Bat_Multi_DocCombine(PreprocessTuna,Bat_Optimizer):
       data     = self.dataframe[self.dataframe['Topik']==t].copy().reset_index(drop=True)
       data     = data['ringkasan'].values[0]
       self.Model['Ringkasan_Sample'].append(data)
-      bat      = Bat_Optimizer(epoch,tuna,self.Preprocessing_Transform.df_to_TSO,data,sin_conv=sin_conv,treshhold = treshhold, markov = markov,a = a,z = z,w_best=w_best,f_best=f_best)
+      bat      = Bat_Optimizer(epoch,tuna,self.Preprocessing_Transform.df_to_TSO,data,sin_conv=sin_conv,treshhold = treshhold, markov = markov,a = a,z = z,w_best=w_best,f_best=f_best,num_markov=num_markov)
       bat.fit()
 
       w_best = bat.w_best
@@ -1248,7 +1252,9 @@ class IWO_Optimizer:
 
     self.epoch      = epoch #T_Max
     self.df         = dataframe #Hasil ringkasann(TSO)
-    self.condition  = sum([treshhold,markov])
+    self.condition  = 1
+    if num_markov == 9:
+      self.condition = 2 
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history  = {}
@@ -1508,7 +1514,7 @@ class IWO_Multi_DocCombine(PreprocessTuna,IWO_Optimizer):
 
     self.Model_Group = None
 
-  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing = True, w_best = [], f_best = 0.0):
+  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing = True, w_best = [], f_best = 0.0,num_markov=num_markov):
 
     global PreProcessDataTrain
     if preprocessing: 
@@ -1527,7 +1533,7 @@ class IWO_Multi_DocCombine(PreprocessTuna,IWO_Optimizer):
       data     = self.dataframe[self.dataframe['Topik']==t].copy().reset_index(drop=True)
       data     = data['ringkasan'].values[0]
       self.Model['Ringkasan_Sample'].append(data)
-      bat      = IWO_Optimizer(epoch,tuna,self.Preprocessing_Transform.df_to_TSO,data,sin_conv=sin_conv,treshhold = treshhold, markov = markov,a = a,z = z,w_best=w_best,f_best=f_best)
+      bat      = IWO_Optimizer(epoch,tuna,self.Preprocessing_Transform.df_to_TSO,data,sin_conv=sin_conv,treshhold = treshhold, markov = markov,a = a,z = z,w_best=w_best,f_best=f_best,num_markov=num_markov)
       bat.fit()
 
       w_best = bat.w_best
@@ -1575,7 +1581,7 @@ class IWO_Multi_DocCombine(PreprocessTuna,IWO_Optimizer):
     return result_dict
   
 class PSO_Optimizer:
-  def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[]):
+  def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[], num_markov = 8):
     if treshhold:
       dataframe = dataframe[dataframe['DropFromDf']==True].reset_index(drop=True)
     if markov:
@@ -1583,7 +1589,9 @@ class PSO_Optimizer:
 
     self.epoch      = epoch #T_Max
     self.df         = dataframe #Hasil ringkasann(TSO)
-    self.condition  = sum([treshhold,markov])
+    self.condition  = 1
+    if num_markov == 9:
+      self.condition = 2 
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history  = {}
@@ -1735,7 +1743,7 @@ class PSO_Multi_DocCombine(PreprocessTuna,PSO_Optimizer):
 
     self.Model_Group = None
 
-  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0):
+  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0,num_markov=num_markov):
     
     global PreProcessDataTrain
     if preprocessing: 
@@ -1754,7 +1762,7 @@ class PSO_Multi_DocCombine(PreprocessTuna,PSO_Optimizer):
       data     = self.dataframe[self.dataframe['Topik']==t].copy().reset_index(drop=True)
       data     = data['ringkasan'].values[0]
       self.Model['Ringkasan_Sample'].append(data)
-      bat      = PSO_Optimizer(epoch,tuna,self.Preprocessing_Transform.df_to_TSO,data,sin_conv=sin_conv,treshhold = treshhold, markov = markov,a = a,z = z,w_best=w_best,f_best=f_best)
+      bat      = PSO_Optimizer(epoch,tuna,self.Preprocessing_Transform.df_to_TSO,data,sin_conv=sin_conv,treshhold = treshhold, markov = markov,a = a,z = z,w_best=w_best,f_best=f_best,num_markov=num_markov)
       bat.fit()
 
       w_best = bat.w_best
@@ -1803,7 +1811,7 @@ class PSO_Multi_DocCombine(PreprocessTuna,PSO_Optimizer):
   
 
 class ABC_Optimizer:
-  def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[]):
+  def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[], num_markov = 8):
     if treshhold:
       dataframe = dataframe[dataframe['DropFromDf']==True].reset_index(drop=True)
     if markov:
@@ -1811,7 +1819,9 @@ class ABC_Optimizer:
 
     self.epoch      = epoch #T_Max
     self.df         = dataframe #Hasil ringkasann(TSO)
-    self.condition  = sum([treshhold,markov])
+    self.condition  = 1
+    if num_markov == 9:
+      self.condition = 2 
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history  = {}
@@ -1980,7 +1990,7 @@ class ABC_Multi_DocCombine(PreprocessTuna,ABC_Optimizer):
 
     self.Model_Group = None
 
-  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0):
+  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0,num_markov=num_markov):
     global PreProcessDataTrain
     if preprocessing: 
       self.Preprocessing_Transform = PreprocessTuna(df = self.dataframe, sin_conv=sin_conv,treshhold = treshhold,markov = markov,tfidf = tfidf,tfidf_compress = tfidf_compress)
@@ -1998,7 +2008,7 @@ class ABC_Multi_DocCombine(PreprocessTuna,ABC_Optimizer):
       data     = self.dataframe[self.dataframe['Topik']==t].copy().reset_index(drop=True)
       data     = data['ringkasan'].values[0]
       self.Model['Ringkasan_Sample'].append(data)
-      bat      = ABC_Optimizer(epoch,tuna,self.Preprocessing_Transform.df_to_TSO,data,sin_conv=sin_conv,treshhold = treshhold, markov = markov,a = a,z = z,w_best=w_best,f_best=f_best)
+      bat      = ABC_Optimizer(epoch,tuna,self.Preprocessing_Transform.df_to_TSO,data,sin_conv=sin_conv,treshhold = treshhold, markov = markov,a = a,z = z,w_best=w_best,f_best=f_best,num_markov=num_markov)
       bat.fit()
 
       w_best = bat.w_best
@@ -2122,7 +2132,7 @@ class WOA:
       return f_values, optimal_x
 
 class Whale_Optimizer(WOA):
-  def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[]):
+  def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[], num_markov = 8):
     if treshhold:
       dataframe = dataframe[dataframe['DropFromDf']==True].reset_index(drop=True)
     if markov:
@@ -2130,7 +2140,9 @@ class Whale_Optimizer(WOA):
 
     self.epoch      = epoch #T_Max
     self.df         = dataframe #Hasil ringkasann(TSO)
-    self.condition  = sum([treshhold,markov])
+    self.condition  = 1
+    if num_markov == 9:
+      self.condition = 2 
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history  = {}
@@ -2289,7 +2301,7 @@ class Whale_Multi_DocCombine(PreprocessTuna,Whale_Optimizer):
 
     self.Model_Group = None
 
-  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0):
+  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0,num_markov=num_markov):
     global PreProcessDataTrain
     if preprocessing: 
       self.Preprocessing_Transform = PreprocessTuna(df = self.dataframe, sin_conv=sin_conv,treshhold = treshhold,markov = markov,tfidf = tfidf,tfidf_compress = tfidf_compress)
@@ -2307,7 +2319,7 @@ class Whale_Multi_DocCombine(PreprocessTuna,Whale_Optimizer):
       data     = self.dataframe[self.dataframe['Topik']==t].copy().reset_index(drop=True)
       data     = data['ringkasan'].values[0]
       self.Model['Ringkasan_Sample'].append(data)
-      bat      = Whale_Optimizer(epoch,tuna,self.Preprocessing_Transform.df_to_TSO,data,sin_conv=sin_conv,treshhold = treshhold, markov = markov,a = a,z = z,w_best=w_best,f_best=f_best)
+      bat      = Whale_Optimizer(epoch,tuna,self.Preprocessing_Transform.df_to_TSO,data,sin_conv=sin_conv,treshhold = treshhold, markov = markov,a = a,z = z,w_best=w_best,f_best=f_best,num_markov=num_markov)
       bat.fit()
 
       w_best = bat.w_best
