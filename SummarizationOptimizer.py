@@ -941,7 +941,7 @@ class TSO_Multi_DocCombine(PreprocessTuna,Tuna_Swamp_Optimizer):
 
     self.Model_Group = None
 
-  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing = True,w_best = [], f_best = 0.0,num_markov=num_markov):
+  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing = True,w_best = [], f_best = 0.0,num_markov=8):
 
     global PreProcessDataTrain
     if preprocessing: 
@@ -1176,7 +1176,7 @@ class Bat_Multi_DocCombine(PreprocessTuna,Bat_Optimizer):
 
     self.Model_Group = None
 
-  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0,num_markov=num_markov):
+  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0,num_markov=8):
     global PreProcessDataTrain
     if preprocessing: 
       self.Preprocessing_Transform = PreprocessTuna(df = self.dataframe, sin_conv=sin_conv,treshhold = treshhold,markov = markov,tfidf = tfidf,tfidf_compress = tfidf_compress)
@@ -1514,7 +1514,7 @@ class IWO_Multi_DocCombine(PreprocessTuna,IWO_Optimizer):
 
     self.Model_Group = None
 
-  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing = True, w_best = [], f_best = 0.0,num_markov=num_markov):
+  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing = True, w_best = [], f_best = 0.0,num_markov=8):
 
     global PreProcessDataTrain
     if preprocessing: 
@@ -1743,7 +1743,7 @@ class PSO_Multi_DocCombine(PreprocessTuna,PSO_Optimizer):
 
     self.Model_Group = None
 
-  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0,num_markov=num_markov):
+  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0,num_markov=8):
     
     global PreProcessDataTrain
     if preprocessing: 
@@ -1809,7 +1809,6 @@ class PSO_Multi_DocCombine(PreprocessTuna,PSO_Optimizer):
 
     return result_dict
   
-
 class ABC_Optimizer:
   def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[], num_markov = 8):
     if treshhold:
@@ -1990,7 +1989,7 @@ class ABC_Multi_DocCombine(PreprocessTuna,ABC_Optimizer):
 
     self.Model_Group = None
 
-  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0,num_markov=num_markov):
+  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0,num_markov=8):
     global PreProcessDataTrain
     if preprocessing: 
       self.Preprocessing_Transform = PreprocessTuna(df = self.dataframe, sin_conv=sin_conv,treshhold = treshhold,markov = markov,tfidf = tfidf,tfidf_compress = tfidf_compress)
@@ -2301,7 +2300,7 @@ class Whale_Multi_DocCombine(PreprocessTuna,Whale_Optimizer):
 
     self.Model_Group = None
 
-  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0,num_markov=num_markov):
+  def fit(self,sin_conv,treshhold,markov,epoch,tuna,a,z,tfidf=True,tfidf_compress="", preprocessing=True, w_best = [], f_best = 0.0,num_markov=8):
     global PreProcessDataTrain
     if preprocessing: 
       self.Preprocessing_Transform = PreprocessTuna(df = self.dataframe, sin_conv=sin_conv,treshhold = treshhold,markov = markov,tfidf = tfidf,tfidf_compress = tfidf_compress)
