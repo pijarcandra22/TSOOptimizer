@@ -700,7 +700,7 @@ class Tuna_Swamp_Optimizer:
 
     self.epoch     = epoch #T_Max
     self.df        = dataframe #Hasil ringkasann(TSO)
-    self.condition  = 1
+    self.condition  = 3
     if num_markov == 9:
       self.condition = 2 
     self.fitur     = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
@@ -1017,7 +1017,7 @@ class Bat_Optimizer:
 
     self.epoch      = epoch #T_Max
     self.df         = dataframe #Hasil ringkasann(TSO)
-    self.condition  = 1
+    self.condition  = 3
     if num_markov == 9:
       self.condition = 2 
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
@@ -1252,7 +1252,7 @@ class IWO_Optimizer:
 
     self.epoch      = epoch #T_Max
     self.df         = dataframe #Hasil ringkasann(TSO)
-    self.condition  = 1
+    self.condition  = 3
     if num_markov == 9:
       self.condition = 2 
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
@@ -1589,7 +1589,7 @@ class PSO_Optimizer:
 
     self.epoch      = epoch #T_Max
     self.df         = dataframe #Hasil ringkasann(TSO)
-    self.condition  = 1
+    self.condition  = 3
     if num_markov == 9:
       self.condition = 2 
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
@@ -1818,7 +1818,7 @@ class ABC_Optimizer:
 
     self.epoch      = epoch #T_Max
     self.df         = dataframe #Hasil ringkasann(TSO)
-    self.condition  = 1
+    self.condition  = 3
     if num_markov == 9:
       self.condition = 2 
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
@@ -2139,7 +2139,7 @@ class Whale_Optimizer(WOA):
 
     self.epoch      = epoch #T_Max
     self.df         = dataframe #Hasil ringkasann(TSO)
-    self.condition  = 1
+    self.condition  = 3
     if num_markov == 9:
       self.condition = 2 
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
