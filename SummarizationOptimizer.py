@@ -702,7 +702,7 @@ class Tuna_Swamp_Optimizer:
     self.df        = dataframe #Hasil ringkasann(TSO)
     self.condition  = 3
     if num_markov == 9:
-      self.condition = 2 
+      self.condition = 0 
     self.fitur     = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w         = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history = {}
@@ -1019,7 +1019,7 @@ class Bat_Optimizer:
     self.df         = dataframe #Hasil ringkasann(TSO)
     self.condition  = 3
     if num_markov == 9:
-      self.condition = 2 
+      self.condition = 0 
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.NP, self.D = self.fitur.shape
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
@@ -1254,7 +1254,7 @@ class IWO_Optimizer:
     self.df         = dataframe #Hasil ringkasann(TSO)
     self.condition  = 3
     if num_markov == 9:
-      self.condition = 2 
+      self.condition = 0 
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history  = {}
@@ -1591,7 +1591,7 @@ class PSO_Optimizer:
     self.df         = dataframe #Hasil ringkasann(TSO)
     self.condition  = 3
     if num_markov == 9:
-      self.condition = 2 
+      self.condition = 0 
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history  = {}
@@ -1820,7 +1820,7 @@ class ABC_Optimizer:
     self.df         = dataframe #Hasil ringkasann(TSO)
     self.condition  = 3
     if num_markov == 9:
-      self.condition = 2 
+      self.condition = 0 
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history  = {}
@@ -2141,7 +2141,7 @@ class Whale_Optimizer(WOA):
     self.df         = dataframe #Hasil ringkasann(TSO)
     self.condition  = 3
     if num_markov == 9:
-      self.condition = 2 
+      self.condition = 0 
     self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history  = {}
