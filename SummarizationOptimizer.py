@@ -805,6 +805,7 @@ class Tuna_Swamp_Optimizer:
     self.df['final_point'] = np.array(epoch_record)
 
     print(self.df.iloc[:,:-(len(self.f_history)+1)].columns)
+    input()
     self.f_best = self.transform(self.df.iloc[:,:-(len(self.f_history)+1)].copy())[0]
 
   def transform(self,df_new,k=0,weigth=[]):
