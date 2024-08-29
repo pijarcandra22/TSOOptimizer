@@ -2467,6 +2467,7 @@ class Transform_All_Algorithm:
       # for t in range(length_result):
       scores = self.similarity_check_rogue(data['Ringkasan_Sample'].values[0],text)
       result_dict["Refrence"].append(data['Ringkasan_Sample'].values[0])
+      result_dict["Weight"].append(weigth)
 
       result_dict["rouge1"].append(scores['rouge1'])
       result_dict["rouge2"].append(scores['rouge2'])
