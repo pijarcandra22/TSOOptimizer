@@ -808,6 +808,7 @@ class Tuna_Swamp_Optimizer:
 
     _,tso_result = self.transform(self.df.iloc[:,:-(len(self.f_history)+1)].copy())
     text,result_table = bat.sortResult(tso_result,long_text_test)
+    self.text_best = text
     self.f_best = self.similarity_check_rogue(". ".join(self.text_sample),text,'rouge2')
 
   def transform(self,df_new,k=0,weigth=[]):
