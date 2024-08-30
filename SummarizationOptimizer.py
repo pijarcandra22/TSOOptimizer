@@ -1003,7 +1003,7 @@ class TSO_Multi_DocCombine(PreprocessTuna,Tuna_Swamp_Optimizer):
       data = topik_data.iloc[[index]]
 
       fitnes,tso_result = tunaswam.transform(self.df_fit.copy(),k = k, weigth = weigth)
-      text,result_table = tunaswam.sortResult(tso_result,10)
+      text,result_table = tunaswam.sortResult(tso_result)
 
       result_dict["Topik_Name"].append(data['Topik_Name'].values[0])
       result_dict["Result"].append(text)
