@@ -813,7 +813,9 @@ class Tuna_Swamp_Optimizer:
       weigth = self.w_best
     epoch_record = []
     fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
-    print(fitur.shape)
+
+    print(fitur.columns)
+    input()
     for data in range(len(df_new)):
       epoch_record.append(sum(fitur.loc[[data]].values.flatten()*weigth))
     df_new['final_point'] = np.array(epoch_record)
