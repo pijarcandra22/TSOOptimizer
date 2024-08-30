@@ -799,13 +799,16 @@ class Tuna_Swamp_Optimizer:
                 new_weight.append(self.a1*(max(self.w_best)+beta*abs(max(self.w_best)-self.w_best[w]))+self.a2*valx)
         self.w[tuna] = new_weight
 
+    long_text_test = len(self.text_sample)
+
     epoch_record = []
     for data in range(len(self.df)):
       epoch_record.append(sum(self.fitur.loc[[data]].values.flatten()*self.w_best))
     self.df['final_point'] = np.array(epoch_record)
 
-    print(self.df.iloc[:,:-(len(self.f_history)+1)].columns)
-    self.f_best = self.transform(self.df.iloc[:,:-(len(self.f_history)+1)].copy())[0]
+    _,tso_result = self.transform(self.df.iloc[:,:-(len(self.f_history)+1)].copy())
+    text,result_table = bat.sortResult(tso_result,long_text_test)
+    self.f_best = self.similarity_check_rogue(". ".join(self.text_sample),text,'rouge2')
 
   def transform(self,df_new,k=0,weigth=[]):
     if len(weigth) == 0:
