@@ -2440,6 +2440,7 @@ class Transform_All_Algorithm:
         "Table_Result" :[],
         "fitnes"       :[],
         "Opt_Result"   :[],
+        "Weight":[],
         "Refrence"     :[]
     }
 
