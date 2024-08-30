@@ -805,7 +805,6 @@ class Tuna_Swamp_Optimizer:
     self.df['final_point'] = np.array(epoch_record)
 
     print(self.df.iloc[:,:-(len(self.f_history)+1)].columns)
-    input()
     self.f_best = self.transform(self.df.iloc[:,:-(len(self.f_history)+1)].copy())[0]
 
   def transform(self,df_new,k=0,weigth=[]):
@@ -815,7 +814,6 @@ class Tuna_Swamp_Optimizer:
     fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
 
     print(fitur.columns)
-    input()
     for data in range(len(df_new)):
       epoch_record.append(sum(fitur.loc[[data]].values.flatten()*weigth))
     df_new['final_point'] = np.array(epoch_record)
