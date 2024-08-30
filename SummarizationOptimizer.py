@@ -693,6 +693,8 @@ class PreprocessTuna(FeatureExtraction):
 
 class Tuna_Swamp_Optimizer:
   def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[], num_markov = 8):
+    self.raw_df = dataframe
+    
     if treshhold:
       dataframe = dataframe[dataframe['DropFromDf']==True].reset_index(drop=True)
     if markov:
@@ -806,7 +808,7 @@ class Tuna_Swamp_Optimizer:
       epoch_record.append(sum(self.fitur.loc[[data]].values.flatten()*self.w_best))
     self.df['final_point'] = np.array(epoch_record)
 
-    _,tso_result = self.transform(self.df.iloc[:,:-(len(self.f_history)+1)].copy())
+    _,tso_result = self.transform(self.raw_df.copy())
     text,result_table = self.sortResult(tso_result,long_text_test)
     self.text_best = text
     self.f_best = self.similarity_check_rogue(". ".join(self.text_sample),text,'rouge2')
