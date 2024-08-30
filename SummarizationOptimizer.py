@@ -807,7 +807,7 @@ class Tuna_Swamp_Optimizer:
     self.df['final_point'] = np.array(epoch_record)
 
     _,tso_result = self.transform(self.df.iloc[:,:-(len(self.f_history)+1)].copy())
-    text,result_table = bat.sortResult(tso_result,long_text_test)
+    text,result_table = self.sortResult(tso_result,long_text_test)
     self.text_best = text
     self.f_best = self.similarity_check_rogue(". ".join(self.text_sample),text,'rouge2')
 
