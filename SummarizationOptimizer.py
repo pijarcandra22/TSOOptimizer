@@ -746,7 +746,6 @@ class Tuna_Swamp_Optimizer:
         for data in range(len(self.df)):
           print("===========================")
           print(self.fitur.loc[[data]].values.flatten().astype("float"))
-          input()
           epoch_record.append(sum(self.fitur.loc[[data]].values.flatten()*w))
 
         self.df['epoch_'+str(epoch)+'_tuna_'+str(tuna)] = np.array(epoch_record)
