@@ -705,7 +705,7 @@ class Tuna_Swamp_Optimizer:
     if markov:
       self.condition  = 3
       if num_markov == 9:
-        self.condition = 2 
+        self.condition = 4 
     else:
       self.condition = 1
 
