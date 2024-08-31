@@ -705,7 +705,7 @@ class Tuna_Swamp_Optimizer:
     if markov:
       self.condition  = 3
       if num_markov == 9:
-        self.condition = 4 
+        self.condition = 2 
     else:
       self.condition = 1
 
@@ -746,7 +746,7 @@ class Tuna_Swamp_Optimizer:
         for data in range(len(self.df)):
           print("===========================")
           print(self.fitur.loc[[data]].values.flatten())
-          print(w)
+          input()
           epoch_record.append(sum(self.fitur.loc[[data]].values.flatten()*w))
 
         self.df['epoch_'+str(epoch)+'_tuna_'+str(tuna)] = np.array(epoch_record)
