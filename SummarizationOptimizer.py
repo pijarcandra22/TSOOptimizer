@@ -692,7 +692,7 @@ class PreprocessTuna(FeatureExtraction):
       return df_fiks.fillna(0)
 
 class Tuna_Swamp_Optimizer:
-  def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[], num_markov = 8):
+  def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=0, num_markov = 8):
     self.raw_df = dataframe
     
     if treshhold:
@@ -760,6 +760,9 @@ class Tuna_Swamp_Optimizer:
         # else:
         #   text_result = self.df.sample(n=long_text_test).sort_values(by=['epoch_'+str(epoch)+'_tuna_'+str(tuna)],ascending=False)[:long_text_test]['teks'].values.tolist()
 
+        if len(self.w_best) == 0:
+          self.w_best = w
+
         _,tso_result = self.transform(self.raw_df.copy())
         text,result_table = self.sortResult(tso_result,long_text_test)
         fitnes = self.similarity_check_rogue(". ".join(self.text_sample),text,'rouge2')
@@ -767,16 +770,10 @@ class Tuna_Swamp_Optimizer:
         # fitnes = self.similarity_check_rogue(". ".join(self.text_sample),". ".join(text_result),'rouge2')
         self.f_history['epoch_'+str(epoch)+'_tuna_'+str(tuna)] = [fitnes]
 
-        if len(self.w_best) == 0:
+        if fitnes>self.f_best:
           self.w_best = w
           self.f_best = fitnes
-          self.result_best = '. '.join(text_result)
-        else:
-          #Revisi Weigth dan Fitness
-          if fitnes>self.f_best:
-            self.w_best = w
-            self.f_best = fitnes
-            self.result_best = '. '.join(text_result)
+          self.result_best = text
 
 
       self.a1 = self.alpha+(1-self.alpha)*(epoch/self.epoch)
