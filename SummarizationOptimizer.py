@@ -773,7 +773,7 @@ class Tuna_Swamp_Optimizer:
         if fitnes>self.f_best:
           self.w_best = w
           self.f_best = fitnes
-          self.result_best = text
+          self.result_best = ". ".join(text_result)
 
 
       self.a1 = self.alpha+(1-self.alpha)*(epoch/self.epoch)
