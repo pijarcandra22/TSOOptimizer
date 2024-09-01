@@ -762,7 +762,6 @@ class Tuna_Swamp_Optimizer:
 
         _,tso_result = self.transform(self.raw_df.copy())
         text,result_table = self.sortResult(tso_result,long_text_test)
-        self.text_best = text
         fitnes = self.similarity_check_rogue(". ".join(self.text_sample),text,'rouge2')
 
         # fitnes = self.similarity_check_rogue(". ".join(self.text_sample),". ".join(text_result),'rouge2')
@@ -812,10 +811,10 @@ class Tuna_Swamp_Optimizer:
       epoch_record.append(sum(self.fitur.loc[[data]].values.flatten()*self.w_best))
     self.df['final_point'] = np.array(epoch_record)
 
-    _,tso_result = self.transform(self.raw_df.copy())
-    text,result_table = self.sortResult(tso_result,long_text_test)
-    self.text_best = text
-    self.f_best = self.similarity_check_rogue(". ".join(self.text_sample),text,'rouge2')
+    # _,tso_result = self.transform(self.raw_df.copy())
+    # text,result_table = self.sortResult(tso_result,long_text_test)
+    # self.text_best = text
+    # self.f_best = self.similarity_check_rogue(". ".join(self.text_sample),text,'rouge2')
 
   def transform(self,df_new,k=0,weigth=[]):
     if len(weigth) == 0:
