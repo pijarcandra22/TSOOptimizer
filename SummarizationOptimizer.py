@@ -763,11 +763,12 @@ class Tuna_Swamp_Optimizer:
         if len(self.w_best) == 0:
           self.w_best = w
 
-        fitnes,tso_result = self.transform(self.raw_df.copy())
+        _,tso_result = self.transform(self.raw_df.copy())
+        text_result = tso_result.sort_values(by=['final_point'],ascending=False)
         # text,result_table = self.sortResult(tso_result,long_text_test)
         # fitnes = self.similarity_check_rogue(". ".join(self.text_sample),". ".join(text_result),'rouge2')
 
-        # fitnes = self.similarity_check_rogue(". ".join(self.text_sample),". ".join(text_result),'rouge2')
+        fitnes = self.similarity_check_rogue(". ".join(self.text_sample),". ".join(text_result),'rouge2')
         
         self.f_history['epoch_'+str(epoch)+'_tuna_'+str(tuna)] = [fitnes]
 
