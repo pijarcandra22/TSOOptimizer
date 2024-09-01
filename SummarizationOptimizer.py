@@ -763,9 +763,9 @@ class Tuna_Swamp_Optimizer:
         if len(self.w_best) == 0:
           self.w_best = w
 
-        _,tso_result = self.transform(self.raw_df.copy())
-        text,result_table = self.sortResult(tso_result,long_text_test)
-        fitnes = self.similarity_check_rogue(". ".join(self.text_sample),text,'rouge2')
+        # _,tso_result = self.transform(self.raw_df.copy())
+        # text,result_table = self.sortResult(tso_result,long_text_test)
+        fitnes = self.similarity_check_rogue(". ".join(self.text_sample),". ".join(text_result),'rouge2')
 
         # fitnes = self.similarity_check_rogue(". ".join(self.text_sample),". ".join(text_result),'rouge2')
         self.f_history['epoch_'+str(epoch)+'_tuna_'+str(tuna)] = [fitnes]
@@ -832,7 +832,7 @@ class Tuna_Swamp_Optimizer:
     text_result       = self.sortResult(df_new,long_text_test)[0].split(". ")
     
     # fitnes = []
-    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
+    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result_clean[:long_text_test]),'rouge2')
     # for text in range(long_text_test):
     #   fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
 
