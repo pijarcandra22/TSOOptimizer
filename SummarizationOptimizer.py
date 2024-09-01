@@ -761,7 +761,7 @@ class Tuna_Swamp_Optimizer:
         #   text_result = self.df.sample(n=long_text_test).sort_values(by=['epoch_'+str(epoch)+'_tuna_'+str(tuna)],ascending=False)[:long_text_test]['teks'].values.tolist()
 
         # fitnes = self.similarity_check_rogue(". ".join(self.text_sample),". ".join(text_result),'rouge2')
-        fitnes,tso_result = self.transform(self.raw_df.copy(),w)
+        fitnes,tso_result = self.transform(df_new = self.raw_df.copy(),weigth = w)
         self.f_history['epoch_'+str(epoch)+'_tuna_'+str(tuna)] = [fitnes]
 
         if len(self.w_best) == 0:
