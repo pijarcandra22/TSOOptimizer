@@ -692,7 +692,7 @@ class PreprocessTuna(FeatureExtraction):
       return df_fiks.fillna(0)
 
 class Tuna_Swamp_Optimizer:
-  def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=0, num_markov = 8):
+  def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[], num_markov = 8):
     self.raw_df = dataframe
     
     if treshhold:
@@ -760,21 +760,20 @@ class Tuna_Swamp_Optimizer:
         # else:
         #   text_result = self.df.sample(n=long_text_test).sort_values(by=['epoch_'+str(epoch)+'_tuna_'+str(tuna)],ascending=False)[:long_text_test]['teks'].values.tolist()
 
-        if len(self.w_best) == 0:
-          self.w_best = w
-
-        fitnes,tso_result = self.transform(self.raw_df.copy())
-        text_result = tso_result.sort_values(by=['final_point'],ascending=False)
-        # text,result_table = self.sortResult(tso_result,long_text_test)
         # fitnes = self.similarity_check_rogue(". ".join(self.text_sample),". ".join(text_result),'rouge2')
-
-        # fitnes = self.similarity_check_rogue(". ".join(self.text_sample),". ".join(text_result),'rouge2')
-        
+        fitnes,tso_result = self.transform(self.raw_df.copy(),w)
         self.f_history['epoch_'+str(epoch)+'_tuna_'+str(tuna)] = [fitnes]
 
-        if fitnes>self.f_best:
+        if len(self.w_best) == 0:
           self.w_best = w
           self.f_best = fitnes
+          self.result_best = '. '.join(text_result)
+        else:
+          #Revisi Weigth dan Fitness
+          if fitnes>self.f_best:
+            self.w_best = w
+            self.f_best = fitnes
+            self.result_best = '. '.join(text_result)
 
 
       self.a1 = self.alpha+(1-self.alpha)*(epoch/self.epoch)
@@ -833,7 +832,7 @@ class Tuna_Swamp_Optimizer:
     text_result       = self.sortResult(df_new,long_text_test)[0].split(". ")
     
     # fitnes = []
-    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result_clean[:long_text_test]),'rouge2')
+    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
     # for text in range(long_text_test):
     #   fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
 
