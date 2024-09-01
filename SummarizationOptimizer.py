@@ -833,7 +833,7 @@ class Tuna_Swamp_Optimizer:
     text_result       = self.sortResult(df_new,long_text_test)[0].split(". ")
     
     # fitnes = []
-    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
+    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result_clean[:long_text_test]),'rouge2')
     # for text in range(long_text_test):
     #   fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
 
