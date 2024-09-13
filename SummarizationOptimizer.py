@@ -2405,6 +2405,16 @@ class Transform_All_Algorithm:
       cosins.append(similarity[0][0])
     print(len(cosins))
     return sum(cosins)/len(pred)
+
+  def eliminasi_treshhold(self,df_fiks):
+    number_form = []
+    treshhold    = df_fiks.iloc[:,6:].quantile(0.25).values
+    jumlah_fitur = df_fiks.iloc[:,6:].shape[1]
+    for i in range(len(df_fiks)):
+      agreeIn = (df_fiks.iloc[[i]].iloc[:,6:].values[0] < treshhold).astype(int).sum()
+      number_form.append(df_fiks.iloc[[i]].iloc[:,6:].values[0].mean())
+
+    return np.mean(number_form)
   
   def similarity_check_rogue(self,x,y):
     scorer = rouge_scorer.RougeScorer(['rouge1','rouge2','rouge3', 'rougeL'], use_stemmer=True)
@@ -2439,13 +2449,16 @@ class Transform_All_Algorithm:
         "rouge2"    :[],
         "rouge3"    :[],
         "rougeL"    :[],
-        "coherence" :[],
+        "coherence_by_sort" :[],
+        "coherence_by_point" :[],
+        "coherence_by_datetime" :[],
         "Result"       :[],
         "Table_Result" :[],
         "fitnes"       :[],
         "Opt_Result"   :[],
         "Weight":[],
-        "Refrence"     :[]
+        "Refrence"     :[],
+        "Redudansi"     :[]
     }
 
     #Pengambilan Data Ringkasan Pakar Per Topik
@@ -2466,20 +2479,20 @@ class Transform_All_Algorithm:
       
       text = None
       result_table = None
-      if answer_form == "standard":
-        text,result_table = bat.sortResult(tso_result,length_result)
-      elif answer_form == "weight":
-        result_df = tso_result.sort_values(by=['final_point'],ascending=False)
-        text,result_table = ". ".join(result_df[:length_result]['teks'].values.tolist()),result_df
+      
+      text_sort,result_table = bat.sortResult(tso_result,length_result)
+      
+      result_df = tso_result.sort_values(by=['final_point'],ascending=False)
+      text_point = ". ".join(result_df[:length_result]['teks'].values.tolist())
 
       result_dict["Topik_Name"].append(data['Topik_Name'].values[0])
-      result_dict["Result"].append(text)
+      result_dict["Result"].append(text_sort)
       result_dict["fitnes"].append(fitnes)
       result_dict["Table_Result"].append(result_table)
       result_dict["Opt_Result"].append(tso_result)
 
       # for t in range(length_result):
-      scores = self.similarity_check_rogue(data['Ringkasan_Sample'].values[0],text)
+      scores = self.similarity_check_rogue(data['Ringkasan_Sample'].values[0],text_point)
       result_dict["Refrence"].append(data['Ringkasan_Sample'].values[0])
       result_dict["Weight"].append(weigth)
 
@@ -2487,6 +2500,8 @@ class Transform_All_Algorithm:
       result_dict["rouge2"].append(scores['rouge2'])
       result_dict["rouge3"].append(scores['rouge3'])
       result_dict["rougeL"].append(scores['rougeL'])
-      result_dict["coherence"].append(self.get_coherence(text.split(". ")))
+      result_dict["coherence_by_sort"].append(self.get_coherence(text_sort.split(". ")))
+      result_dict["coherence_by_point"].append(self.get_coherence(text_sort.split(". ")))
+      result_dict["Redudansi"].append(self.eliminasi_treshhold(tso_result.iloc[:,:-8]))
 
     return result_dict
