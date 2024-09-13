@@ -130,12 +130,14 @@ class Preparation_Data(PreprocessingText):
     df_split = {
         'title' : [],
         'teks' : [],
+        'tanggal' : [],
         'doc_id' : [],
         'teks_id' : []
     }
     for i in range(len(df)):
       for j,text in enumerate(self.dotImportant(df.iloc[[i]]['content'].values[0]).split('. ')):
         df_split['title'].append(df.iloc[[i]]['title'].values[0])
+        df_split['tanggal'].append(df.iloc[[i]]['Tanggal'].values[0])
         df_split['teks'].append(text.strip())
         df_split['doc_id'].append(i)
         df_split['teks_id'].append(j)
