@@ -522,11 +522,11 @@ class PreprocessTuna(FeatureExtraction):
   def eliminasi_treshhold(self,df_fiks):
     isDrop = []
     number_form = []
-    treshhold    = df_fiks.iloc[:,7:].quantile(0.25).values
-    jumlah_fitur = df_fiks.iloc[:,7:].shape[1]
+    treshhold    = df_fiks.iloc[:,6:].quantile(0.25).values
+    jumlah_fitur = df_fiks.iloc[:,6:].shape[1]
     for i in range(len(df_fiks)):
-      agreeIn = (df_fiks.iloc[[i]].iloc[:,7:].values[0] < treshhold).astype(int).sum()
-      number_form.append(df_fiks.iloc[[i]].iloc[:,7:].values[0].mean())
+      agreeIn = (df_fiks.iloc[[i]].iloc[:,6:].values[0] < treshhold).astype(int).sum()
+      number_form.append(df_fiks.iloc[[i]].iloc[:,6:].values[0].mean())
       isDrop.append(agreeIn < jumlah_fitur)
 
     df_fiks['DropFromDf'] = np.array(isDrop)
@@ -711,7 +711,7 @@ class Tuna_Swamp_Optimizer:
     else:
       self.condition = 1
 
-    self.fitur     = dataframe.iloc[:,7:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
+    self.fitur     = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w         = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history = {}
     self.f_history = {}
@@ -819,7 +819,7 @@ class Tuna_Swamp_Optimizer:
     if len(weigth) == 0:
       weigth = self.w_best
     epoch_record = []
-    fitur = df_new.iloc[:,7:-(len(df_new['doc_id'].unique())+2)-self.condition]
+    fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
 
     print(fitur.columns)
     for data in range(len(df_new)):
@@ -1035,7 +1035,7 @@ class Bat_Optimizer:
     self.condition  = 3
     if num_markov == 9:
       self.condition = 0 
-    self.fitur      = dataframe.iloc[:,7:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
+    self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.NP, self.D = self.fitur.shape
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history  = {}
@@ -1132,7 +1132,7 @@ class Bat_Optimizer:
     if len(weigth) == 0:
       weigth = self.w_best
     epoch_record = []
-    fitur = df_new.iloc[:,7:-(len(df_new['doc_id'].unique())+2)-self.condition]
+    fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
     print(fitur.shape)
     for data in range(len(df_new)):
       epoch_record.append(sum(fitur.loc[[data]].values.flatten()*weigth))
@@ -1270,7 +1270,7 @@ class IWO_Optimizer:
     self.condition  = 3
     if num_markov == 9:
       self.condition = 0 
-    self.fitur      = dataframe.iloc[:,7:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
+    self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history  = {}
     self.f_history  = {}
@@ -1471,7 +1471,7 @@ class IWO_Optimizer:
     if len(weigth) == 0:
       weigth = self.w_best
     epoch_record = []
-    fitur = df_new.iloc[:,7:-(len(df_new['doc_id'].unique())+2)-self.condition]
+    fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
     print(fitur.shape)
     for data in range(len(df_new)):
       epoch_record.append(sum(fitur.loc[[data]].values.flatten()*weigth))
@@ -1607,7 +1607,7 @@ class PSO_Optimizer:
     self.condition  = 3
     if num_markov == 9:
       self.condition = 0 
-    self.fitur      = dataframe.iloc[:,7:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
+    self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history  = {}
     self.f_history  = {}
@@ -1700,7 +1700,7 @@ class PSO_Optimizer:
     if len(weigth) == 0:
       weigth = self.w_best
     epoch_record = []
-    fitur = df_new.iloc[:,7:-(len(df_new['doc_id'].unique())+2)-self.condition]
+    fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
     print(fitur.shape)
     for data in range(len(df_new)):
       epoch_record.append(sum(fitur.loc[[data]].values.flatten()*weigth))
@@ -1836,7 +1836,7 @@ class ABC_Optimizer:
     self.condition  = 3
     if num_markov == 9:
       self.condition = 0 
-    self.fitur      = dataframe.iloc[:,7:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
+    self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history  = {}
     self.f_history  = {}
@@ -1946,7 +1946,7 @@ class ABC_Optimizer:
     if len(weigth) == 0:
       weigth = self.w_best
     epoch_record = []
-    fitur = df_new.iloc[:,7:-(len(df_new['doc_id'].unique())+2)-self.condition]
+    fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
     print(fitur.shape)
     for data in range(len(df_new)):
       epoch_record.append(sum(fitur.loc[[data]].values.flatten()*weigth))
@@ -2157,7 +2157,7 @@ class Whale_Optimizer(WOA):
     self.condition  = 3
     if num_markov == 9:
       self.condition = 0 
-    self.fitur      = dataframe.iloc[:,7:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
+    self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
     self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
     self.w_history  = {}
     self.f_history  = {}
@@ -2257,7 +2257,7 @@ class Whale_Optimizer(WOA):
     if len(weigth) == 0:
       weigth = self.w_best
     epoch_record = []
-    fitur = df_new.iloc[:,7:-(len(df_new['doc_id'].unique())+2)-self.condition]
+    fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
     print(fitur.shape)
     for data in range(len(df_new)):
       epoch_record.append(sum(fitur.loc[[data]].values.flatten()*weigth))
@@ -2410,11 +2410,11 @@ class Transform_All_Algorithm:
 
   def eliminasi_treshhold(self,df_fiks):
     number_form = []
-    treshhold    = df_fiks.iloc[:,7:].quantile(0.25).values
-    jumlah_fitur = df_fiks.iloc[:,7:].shape[1]
+    treshhold    = df_fiks.iloc[:,6:].quantile(0.25).values
+    jumlah_fitur = df_fiks.iloc[:,6:].shape[1]
     for i in range(len(df_fiks)):
-      agreeIn = (df_fiks.iloc[[i]].iloc[:,7:].values[0] < treshhold).astype(int).sum()
-      number_form.append(df_fiks.iloc[[i]].iloc[:,7:].values[0].mean())
+      agreeIn = (df_fiks.iloc[[i]].iloc[:,6:].values[0] < treshhold).astype(int).sum()
+      number_form.append(df_fiks.iloc[[i]].iloc[:,6:].values[0].mean())
 
     return np.mean(number_form)
   
