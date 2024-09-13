@@ -2502,6 +2502,6 @@ class Transform_All_Algorithm:
       result_dict["rougeL"].append(scores['rougeL'])
       result_dict["coherence_by_sort"].append(self.get_coherence(text_sort.split(". ")))
       result_dict["coherence_by_point"].append(self.get_coherence(text_sort.split(". ")))
-      result_dict["Redudansi"].append(self.eliminasi_treshhold(tso_result.iloc[:,:-9]))
+      result_dict["Redudansi"].append(self.eliminasi_treshhold(tso_result.iloc[:,:6+8]))
 
     return result_dict
