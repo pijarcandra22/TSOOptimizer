@@ -2445,7 +2445,7 @@ class Transform_All_Algorithm:
       except:
         fitur4.append(0)
 
-    redudansi = np.array(fitur4)
+    redudansi = np.mean(fitur4)
 
     return redudansi
 
