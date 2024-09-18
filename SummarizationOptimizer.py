@@ -2405,6 +2405,49 @@ class Transform_All_Algorithm:
       cosins.append(similarity[0][0])
     print(len(cosins))
     return sum(cosins)/len(pred)
+  
+  def get_redundansi(self,df_clean):
+    resp = requests.get('https://raw.githubusercontent.com/victoriasovereigne/tesaurus/master/dict.json')
+    resp_dict = resp.json()
+    Sinonim1 = []
+    for j in range(len(df_clean)):
+      kal = df_clean[j]
+      newKal = []
+      for k in kal.split(" "):
+        try:
+          k = resp_dict[k]['sinonim'][0]
+        except:
+          pass
+        newKal.append(k)
+      Sinonim1.append(" ".join(newKal))
+
+    df_clean = Sinonim1
+
+    fitur4 = []
+    for i in range(len(df_clean)):
+      try:
+        document = df_clean
+        document.remove(df_clean[i])
+        j = df_clean[i]
+        cosins = []
+        for k in document:
+          if j!=k:
+            vectorizer = TfidfVectorizer()
+            vectors = vectorizer.fit_transform([j, k])
+            similarity = cosine_similarity(vectors[0], vectors[1])
+            cosins.append(similarity[0][0])
+
+        hasil = sum(cosins)/max(cosins)
+        if np.isnan(hasil):
+          fitur4.append(0)
+        else:
+          fitur4.append(hasil)
+      except:
+        fitur4.append(0)
+
+    redudansi = np.array(fitur4)
+
+    return redudansi
 
   def eliminasi_treshhold(self,df_fiks):
     number_form = []
@@ -2501,7 +2544,7 @@ class Transform_All_Algorithm:
       result_dict["rouge3"].append(scores['rouge3'])
       result_dict["rougeL"].append(scores['rougeL'])
       result_dict["coherence_by_sort"].append(self.get_coherence(text_sort.split(". ")))
-      result_dict["coherence_by_point"].append(self.get_coherence(text_sort.split(". ")))
-      result_dict["Redudansi"].append(self.eliminasi_treshhold(tso_result.iloc[:,:6+8]))
+      result_dict["coherence_by_point"].append(self.get_coherence(text_point.split(". ")))
+      result_dict["Redudansi"].append(self.get_redundansi(text_sort.split(". ")))
 
     return result_dict
