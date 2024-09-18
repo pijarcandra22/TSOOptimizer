@@ -6,6 +6,7 @@ import emoji
 import math
 import operator
 import copy
+from datetime import datetime
 
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
@@ -2437,7 +2438,7 @@ class Transform_All_Algorithm:
             similarity = cosine_similarity(vectors[0], vectors[1])
             cosins.append(similarity[0][0])
 
-        hasil = sum(cosins)/max(cosins)
+        hasil = sum(cosins)/len(cosins)
         if np.isnan(hasil):
           fitur4.append(0)
         else:
@@ -2485,6 +2486,8 @@ class Transform_All_Algorithm:
         DataFrame_Fit = self.df_fit
     bat           = self.Model_Group #Mengambil Model Terbaik Yang sebelumnya disimpan
 
+    date_data = df["Tanggal"].apply(lambda x:datetime.strptime(x, "%d/%m/%Y %H:%M")).values.tolist()
+
     #Deklarasi Variabel Penyimpan Hasil per Topik
     result_dict = {
         "Topik_Name"   :[],
@@ -2526,6 +2529,9 @@ class Transform_All_Algorithm:
       text_sort,result_table = bat.sortResult(tso_result,length_result)
       
       result_df = tso_result.sort_values(by=['final_point'],ascending=False)
+      result_df["date_time"] = result_df["doc_id"].apply(lambda x:date_data[x])
+      text_datetime = result_df[:length_result].sort_values(by=['date_time'],ascending=True)['teks'].values.tolist()
+
       text_point = ". ".join(result_df[:length_result]['teks'].values.tolist())
 
       result_dict["Topik_Name"].append(data['Topik_Name'].values[0])
@@ -2545,6 +2551,7 @@ class Transform_All_Algorithm:
       result_dict["rougeL"].append(scores['rougeL'])
       result_dict["coherence_by_sort"].append(self.get_coherence(text_sort.split(". ")))
       result_dict["coherence_by_point"].append(self.get_coherence(text_point.split(". ")))
+      result_dict["coherence_by_datetime"].append(self.get_coherence(text_datetime))
       result_dict["Redudansi"].append(self.get_redundansi(text_sort.split(". ")))
 
     return result_dict
