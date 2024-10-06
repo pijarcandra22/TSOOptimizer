@@ -2407,7 +2407,7 @@ class Transform_All_Algorithm:
     print(len(cosins))
     return sum(cosins)/len(pred)
   
-  def get_redundansi(self,df_clean):
+  def get_redundansi(self,df_clean,treshold=0):
     resp = requests.get('https://raw.githubusercontent.com/victoriasovereigne/tesaurus/master/dict.json')
     resp_dict = resp.json()
     Sinonim1 = []
@@ -2442,7 +2442,23 @@ class Transform_All_Algorithm:
         if np.isnan(hasil):
           fitur4.append(0)
         else:
-          fitur4.append(hasil)
+          if treshold == 0:
+            fitur4.append(hasil)
+          else:
+            if treshold == "q1":
+              treshold = np.percentile(hasil, 25)
+            elif treshold == "q2":
+              treshold = np.percentile(hasil, 50)
+            elif treshold == "q3":
+              treshold = np.percentile(hasil, 75)
+            else:
+              treshold = float(treshold)
+
+            if hasil>treshold:
+              fitur4.append(1)
+            else:
+              fitur4.append(0)
+            
       except:
         fitur4.append(0)
 
@@ -2471,7 +2487,7 @@ class Transform_All_Algorithm:
       'rougeL':scores['rougeL'].precision
     }
 
-  def transform(self,df,length_result=0,preprocessing = True, weigth=[], answer_form = "standard"):
+  def transform(self,df,length_result=0,preprocessing = True, weigth=[],redudansi_treshold=0, answer_form = "standard"):
     global DataFrame_Fit
     if preprocessing:
       print("Preprocessing Running")
@@ -2552,6 +2568,6 @@ class Transform_All_Algorithm:
       result_dict["coherence_by_sort"].append(self.get_coherence(text_sort.split(". ")))
       result_dict["coherence_by_point"].append(self.get_coherence(text_point.split(". ")))
       result_dict["coherence_by_datetime"].append(self.get_coherence(text_datetime))
-      result_dict["Redudansi"].append(self.get_redundansi(text_sort.split(". ")))
+      result_dict["Redudansi"].append(self.get_redundansi(text_sort.split(". "),treshold=redudansi_treshold))
 
     return result_dict
