@@ -2442,7 +2442,7 @@ class Transform_All_Algorithm:
         if np.isnan(hasil):
           fitur4.append(0)
         else:
-          if treshold == 0:
+          if treshold == 0 or treshold=="0":
             fitur4.append(hasil)
           else:
             if treshold == "q1":
