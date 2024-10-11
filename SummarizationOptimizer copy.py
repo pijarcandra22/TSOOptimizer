@@ -1024,41 +1024,35 @@ class TSO_Multi_DocCombine(PreprocessTuna,Tuna_Swamp_Optimizer):
 
 class Bat_Optimizer:
   def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[], num_markov = 8):
-    self.raw_df = dataframe
-    
     if treshhold:
       dataframe = dataframe[dataframe['DropFromDf']==True].reset_index(drop=True)
     if markov:
       dataframe = dataframe[dataframe['TresholdMCL']==True].reset_index(drop=True)
 
-    self.epoch     = epoch #T_Max
-    self.df        = dataframe #Hasil ringkasann(TSO)
-    if markov:
-      self.condition  = 3
-      if num_markov == 9:
-        self.condition = 2 
-    else:
-      self.condition = 1
-
-    self.fitur     = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
-    self.w         = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
-    self.w_history = {}
-    self.f_history = {}
-    self.z         = z #Nilai Z
-    self.alpha     = a #Nilai A
+    self.epoch      = epoch #T_Max
+    self.df         = dataframe #Hasil ringkasann(TSO)
+    self.condition  = 3
+    if num_markov == 9:
+      self.condition = 0 
+    self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
+    self.NP, self.D = self.fitur.shape
+    self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
+    self.w_history  = {}
+    self.f_history  = {}
+    self.z          = z #Nilai Z
+    self.alpha      = a #Nilai A
     self.a1,self.a2,self.p = None,None,None
     self.text_sample = [t.strip() for t in text_sample.split(". ")]
+    self.tuna        = tuna
+
     try:
       self.text_sample.remove('')
     except:
       pass
 
-    self.NP, self.D = self.fitur.shape
-
     self.w_best      = w_best
     self.f_best      = f_best
     self.result_best = []
-    self.tuna        = tuna
 
   def Fun(self, D, sol):
     val = 0.0
@@ -1138,8 +1132,7 @@ class Bat_Optimizer:
       weigth = self.w_best
     epoch_record = []
     fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
-
-    print(fitur.columns)
+    print(fitur.shape)
     for data in range(len(df_new)):
       epoch_record.append(sum(fitur.loc[[data]].values.flatten()*weigth))
     df_new['final_point'] = np.array(epoch_record)
@@ -1152,10 +1145,10 @@ class Bat_Optimizer:
     text_result       = self.sortResult(df_new,long_text_test)[0].split(". ")
     
     # fitnes = []
-    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
     # for text in range(long_text_test):
     #   fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
-
+    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
+    
     return fitnes,df_new
 
   def sortResult(self,urut,lenText):
@@ -1177,7 +1170,7 @@ class Bat_Optimizer:
       sum_point.append(np.mean(listPoint))
     result_df['sum_point'] = np.array(sum_point)
     return ". ".join(result_df.sort_values(by=['sum_point'],ascending=False)['teks'].values.tolist()),result_df
-  
+
 class Bat_Multi_DocCombine(PreprocessTuna,Bat_Optimizer):
   def __init__(self,dataframe):
 
@@ -1265,40 +1258,39 @@ class Bat_Multi_DocCombine(PreprocessTuna,Bat_Optimizer):
     return result_dict
   
 class IWO_Optimizer:
-  def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[], num_markov = 8):
-    self.raw_df = dataframe
-    
+  def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=0):
     if treshhold:
       dataframe = dataframe[dataframe['DropFromDf']==True].reset_index(drop=True)
     if markov:
       dataframe = dataframe[dataframe['TresholdMCL']==True].reset_index(drop=True)
 
-    self.epoch     = epoch #T_Max
-    self.df        = dataframe #Hasil ringkasann(TSO)
-    if markov:
-      self.condition  = 3
-      if num_markov == 9:
-        self.condition = 2 
-    else:
-      self.condition = 1
-
-    self.fitur     = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
-    self.w         = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
-    self.w_history = {}
-    self.f_history = {}
-    self.z         = z #Nilai Z
-    self.alpha     = a #Nilai A
+    self.epoch      = epoch #T_Max
+    self.df         = dataframe #Hasil ringkasann(TSO)
+    self.condition  = 3
+    if num_markov == 9:
+      self.condition = 0 
+    self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
+    self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
+    self.w_history  = {}
+    self.f_history  = {}
+    self.z          = z #Nilai Z
+    self.alpha      = a #Nilai A
     self.a1,self.a2,self.p = None,None,None
     self.text_sample = [t.strip() for t in text_sample.split(". ")]
+    self.tuna       = tuna
+
     try:
       self.text_sample.remove('')
     except:
       pass
 
-    self.w_best      = w_best
+    if len(w_best) == 0:
+      self.w_best    = [random.random() for i in range(len(self.fitur.columns))]
+    else:
+      self.w_best    = w_best
+
     self.f_best      = f_best
     self.result_best = []
-    self.tuna        = tuna
 
   def obj(self, x):
       """
@@ -1479,8 +1471,7 @@ class IWO_Optimizer:
       weigth = self.w_best
     epoch_record = []
     fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
-
-    print(fitur.columns)
+    print(fitur.shape)
     for data in range(len(df_new)):
       epoch_record.append(sum(fitur.loc[[data]].values.flatten()*weigth))
     df_new['final_point'] = np.array(epoch_record)
@@ -1491,11 +1482,10 @@ class IWO_Optimizer:
 
     text_result_clean = df_new.sort_values(by=['final_point'],ascending=False)[:long_text_test]['cleanTeks'].values.tolist()
     text_result       = self.sortResult(df_new,long_text_test)[0].split(". ")
-    
     # fitnes = []
-    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
     # for text in range(long_text_test):
     #   fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
+    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
 
     return fitnes,df_new
 
@@ -1606,44 +1596,38 @@ class IWO_Multi_DocCombine(PreprocessTuna,IWO_Optimizer):
   
 class PSO_Optimizer:
   def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[], num_markov = 8):
-    self.raw_df = dataframe
-    
     if treshhold:
       dataframe = dataframe[dataframe['DropFromDf']==True].reset_index(drop=True)
     if markov:
       dataframe = dataframe[dataframe['TresholdMCL']==True].reset_index(drop=True)
 
-    self.epoch     = epoch #T_Max
-    self.df        = dataframe #Hasil ringkasann(TSO)
-    if markov:
-      self.condition  = 3
-      if num_markov == 9:
-        self.condition = 2 
-    else:
-      self.condition = 1
-
-    self.fitur     = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
-    self.w         = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
-    self.w_history = {}
-    self.f_history = {}
-    self.z         = z #Nilai Z
-    self.alpha     = a #Nilai A
+    self.epoch      = epoch #T_Max
+    self.df         = dataframe #Hasil ringkasann(TSO)
+    self.condition  = 3
+    if num_markov == 9:
+      self.condition = 0 
+    self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
+    self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
+    self.w_history  = {}
+    self.f_history  = {}
+    self.z          = z #Nilai Z
+    self.alpha      = a #Nilai A
     self.a1,self.a2,self.p = None,None,None
     self.text_sample = [t.strip() for t in text_sample.split(". ")]
+    self.tuna       = tuna
+
     try:
       self.text_sample.remove('')
     except:
       pass
-    
-    self.f_best      = f_best
-    self.result_best = []
-
-    self.tuna       = tuna
 
     if len(w_best) == 0:
       self.w_best    = [random.random() for i in range(len(self.fitur.columns))]
     else:
       self.w_best    = w_best
+
+    self.f_best      = f_best
+    self.result_best = []
 
   def jaccard_similarity(self,x,y):
     """ returns the jaccard similarity between two lists """
@@ -1716,8 +1700,7 @@ class PSO_Optimizer:
       weigth = self.w_best
     epoch_record = []
     fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
-
-    print(fitur.columns)
+    print(fitur.shape)
     for data in range(len(df_new)):
       epoch_record.append(sum(fitur.loc[[data]].values.flatten()*weigth))
     df_new['final_point'] = np.array(epoch_record)
@@ -1728,11 +1711,10 @@ class PSO_Optimizer:
 
     text_result_clean = df_new.sort_values(by=['final_point'],ascending=False)[:long_text_test]['cleanTeks'].values.tolist()
     text_result       = self.sortResult(df_new,long_text_test)[0].split(". ")
-    
     # fitnes = []
-    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
     # for text in range(long_text_test):
     #   fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
+    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
 
     return fitnes,df_new
 
@@ -1843,43 +1825,38 @@ class PSO_Multi_DocCombine(PreprocessTuna,PSO_Optimizer):
   
 class ABC_Optimizer:
   def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[], num_markov = 8):
-    self.raw_df = dataframe
-    
     if treshhold:
       dataframe = dataframe[dataframe['DropFromDf']==True].reset_index(drop=True)
     if markov:
       dataframe = dataframe[dataframe['TresholdMCL']==True].reset_index(drop=True)
 
-    self.epoch     = epoch #T_Max
-    self.df        = dataframe #Hasil ringkasann(TSO)
-    if markov:
-      self.condition  = 3
-      if num_markov == 9:
-        self.condition = 2 
-    else:
-      self.condition = 1
-
-    self.fitur     = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
-    self.w         = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
-    self.w_history = {}
-    self.f_history = {}
-    self.z         = z #Nilai Z
-    self.alpha     = a #Nilai A
+    self.epoch      = epoch #T_Max
+    self.df         = dataframe #Hasil ringkasann(TSO)
+    self.condition  = 3
+    if num_markov == 9:
+      self.condition = 0 
+    self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
+    self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
+    self.w_history  = {}
+    self.f_history  = {}
+    self.z          = z #Nilai Z
+    self.alpha      = a #Nilai A
     self.a1,self.a2,self.p = None,None,None
     self.text_sample = [t.strip() for t in text_sample.split(". ")]
+    self.tuna       = tuna
+
     try:
       self.text_sample.remove('')
     except:
       pass
 
-    self.f_best      = f_best
-    self.result_best = []
-
-    self.tuna       = tuna
     if len(w_best) == 0:
       self.w_best    = [random.random() for i in range(len(self.fitur.columns))]
     else:
       self.w_best    = w_best
+
+    self.f_best      = f_best
+    self.result_best = []
 
   def minimize_integers(self,integers):
     return sum(integers)
@@ -1969,8 +1946,7 @@ class ABC_Optimizer:
       weigth = self.w_best
     epoch_record = []
     fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
-
-    print(fitur.columns)
+    print(fitur.shape)
     for data in range(len(df_new)):
       epoch_record.append(sum(fitur.loc[[data]].values.flatten()*weigth))
     df_new['final_point'] = np.array(epoch_record)
@@ -1981,11 +1957,10 @@ class ABC_Optimizer:
 
     text_result_clean = df_new.sort_values(by=['final_point'],ascending=False)[:long_text_test]['cleanTeks'].values.tolist()
     text_result       = self.sortResult(df_new,long_text_test)[0].split(". ")
-    
     # fitnes = []
-    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
     # for text in range(long_text_test):
     #   fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
+    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
 
     return fitnes,df_new
 
@@ -2171,43 +2146,38 @@ class WOA:
 
 class Whale_Optimizer(WOA):
   def __init__(self,epoch,tuna,dataframe,text_sample,sin_conv=True,treshhold = True, markov = True,a = random.random(),z = random.random(),w_best = [],f_best=[], num_markov = 8):
-    self.raw_df = dataframe
-    
     if treshhold:
       dataframe = dataframe[dataframe['DropFromDf']==True].reset_index(drop=True)
     if markov:
       dataframe = dataframe[dataframe['TresholdMCL']==True].reset_index(drop=True)
 
-    self.epoch     = epoch #T_Max
-    self.df        = dataframe #Hasil ringkasann(TSO)
-    if markov:
-      self.condition  = 3
-      if num_markov == 9:
-        self.condition = 2 
-    else:
-      self.condition = 1
-
-    self.fitur     = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
-    self.w         = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
-    self.w_history = {}
-    self.f_history = {}
-    self.z         = z #Nilai Z
-    self.alpha     = a #Nilai A
+    self.epoch      = epoch #T_Max
+    self.df         = dataframe #Hasil ringkasann(TSO)
+    self.condition  = 3
+    if num_markov == 9:
+      self.condition = 0 
+    self.fitur      = dataframe.iloc[:,6:-(len(dataframe['doc_id'].unique())+2)-self.condition].copy()
+    self.w          = [np.array([random.random() for i in range(len(self.fitur.columns))]) for x in range(tuna)]
+    self.w_history  = {}
+    self.f_history  = {}
+    self.z          = z #Nilai Z
+    self.alpha      = a #Nilai A
     self.a1,self.a2,self.p = None,None,None
     self.text_sample = [t.strip() for t in text_sample.split(". ")]
+    self.tuna       = tuna
+
     try:
       self.text_sample.remove('')
     except:
       pass
 
-    self.f_best      = f_best
-    self.result_best = []
-    self.tuna       = tuna
-
     if len(w_best) == 0:
       self.w_best    = [random.random() for i in range(len(self.fitur.columns))]
     else:
       self.w_best    = w_best
+
+    self.f_best      = f_best
+    self.result_best = []
 
   def minimize_integers(self,integers):
     return sum(integers)
@@ -2287,8 +2257,7 @@ class Whale_Optimizer(WOA):
       weigth = self.w_best
     epoch_record = []
     fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique())+2)-self.condition]
-
-    print(fitur.columns)
+    print(fitur.shape)
     for data in range(len(df_new)):
       epoch_record.append(sum(fitur.loc[[data]].values.flatten()*weigth))
     df_new['final_point'] = np.array(epoch_record)
@@ -2299,11 +2268,10 @@ class Whale_Optimizer(WOA):
 
     text_result_clean = df_new.sort_values(by=['final_point'],ascending=False)[:long_text_test]['cleanTeks'].values.tolist()
     text_result       = self.sortResult(df_new,long_text_test)[0].split(". ")
-    
     # fitnes = []
-    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
     # for text in range(long_text_test):
     #   fitnes.append(self.similarity_check_rogue(self.text_sample[text],text_result[text],'rouge2'))
+    fitnes = self.similarity_check_rogue(". ".join(self.text_sample[:long_text_test]),". ".join(text_result[:long_text_test]),'rouge2')
 
     return fitnes,df_new
 
