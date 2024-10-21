@@ -1079,54 +1079,53 @@ class Bat_Optimizer:
     return scores[var_ext].precision
 
   def fit(self):
-    for epoch in range(self.epoch):
-      #refisi Tuna
-        if len(self.w_best) == 0:
-          minimum = 0.5
-          maximum = 0.5
-        else:
-          minimum = min(self.w_best)
-          maximum = max(self.w_best)
+    epoch = 0
+    if len(self.w_best) == 0:
+      minimum = 0.5
+      maximum = 0.5
+    else:
+      minimum = min(self.w_best)
+      maximum = max(self.w_best)
 
-        Algorithm     = BatAlgorithm(self.D, self.NP, self.epoch, self.alpha, self.z, 0.0, self.tuna, -10.0, 10.0, self.Fun)
-        Algorithm.v   = self.fitur.values.tolist()
-        Algorithm.Sol = self.fitur.values.tolist()
+    Algorithm     = BatAlgorithm(self.D, self.NP, self.epoch, self.alpha, self.z, 0.0, self.tuna, -10.0, 10.0, self.Fun)
+    Algorithm.v   = self.fitur.values.tolist()
+    Algorithm.Sol = self.fitur.values.tolist()
 
-        Algorithm.best_bat()
+    Algorithm.best_bat()
 
-        w             = np.array(Algorithm.best)
-        epoch_record = []
-        for data in range(len(self.df)):
-          print("===========================")
-          print(self.fitur.loc[[data]].values.flatten())
-          print(w)
-          epoch_record.append(sum(self.fitur.loc[[data]].values.flatten()*w))
+    w             = np.array(Algorithm.best)
+    epoch_record = []
+    for data in range(len(self.df)):
+      print("===========================")
+      print(self.fitur.loc[[data]].values.flatten())
+      print(w)
+      epoch_record.append(sum(self.fitur.loc[[data]].values.flatten()*w))
 
-        self.df['epoch_'+str(epoch)+'_tuna_'+str(self.tuna)] = np.array(epoch_record)
-        print('epoch_'+str(epoch)+'_tuna_'+str(self.tuna))
-        self.w_history['epoch_'+str(epoch)+'_tuna_'+str(self.tuna)] = w
+    self.df['epoch_'+str(epoch)+'_tuna_'+str(self.tuna)] = np.array(epoch_record)
+    print('epoch_'+str(epoch)+'_tuna_'+str(self.tuna))
+    self.w_history['epoch_'+str(epoch)+'_tuna_'+str(self.tuna)] = w
 
-        long_text_test = len(self.text_sample)
+    long_text_test = len(self.text_sample)
 
-        text_result = ''
-        #if self.order:
-        text_result = self.df.sort_values(by=['epoch_'+str(epoch)+'_tuna_'+str(self.tuna)],ascending=False)[:long_text_test]['teks'].values.tolist()
-        # else:
-        #   text_result = self.df.sample(n=long_text_test).sort_values(by=['epoch_'+str(epoch)+'_tuna_'+str(tuna)],ascending=False)[:long_text_test]['teks'].values.tolist()
+    text_result = ''
+    #if self.order:
+    text_result = self.df.sort_values(by=['epoch_'+str(epoch)+'_tuna_'+str(self.tuna)],ascending=False)[:long_text_test]['teks'].values.tolist()
+    # else:
+    #   text_result = self.df.sample(n=long_text_test).sort_values(by=['epoch_'+str(epoch)+'_tuna_'+str(tuna)],ascending=False)[:long_text_test]['teks'].values.tolist()
 
-        fitnes = self.similarity_check_rogue(". ".join(self.text_sample),". ".join(text_result),'rouge2')
-        self.f_history['epoch_'+str(epoch)+'_tuna_'+str(self.tuna)] = [fitnes]
+    fitnes = self.similarity_check_rogue(". ".join(self.text_sample),". ".join(text_result),'rouge2')
+    self.f_history['epoch_'+str(epoch)+'_tuna_'+str(self.tuna)] = [fitnes]
 
-        if len(self.w_best) == 0:
-          self.w_best = w
-          self.f_best = fitnes
-          self.result_best = '. '.join(text_result)
-        else:
-          #Revisi Weigth dan Fitness
-          if fitnes>self.f_best:
-            self.w_best = w
-            self.f_best = fitnes
-            self.result_best = '. '.join(text_result)
+    if len(self.w_best) == 0:
+      self.w_best = w
+      self.f_best = fitnes
+      self.result_best = '. '.join(text_result)
+    else:
+      #Revisi Weigth dan Fitness
+      if fitnes>self.f_best:
+        self.w_best = w
+        self.f_best = fitnes
+        self.result_best = '. '.join(text_result)
 
     epoch_record = []
     for data in range(len(self.df)):
