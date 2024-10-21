@@ -1424,7 +1424,13 @@ class IWO_Optimizer:
           minimum = min(self.fitur.values.tolist())
           maximum = max(self.fitur.values.tolist())
 
-        Algorithm     = self.IWOAlgorithm(pos = self.fitur.values.tolist())
+        Algorithm     = self.IWOAlgorithm(
+          pos = self.fitur.values.tolist(),
+          iter =self.epoch*100,
+          mpop=self.tuna*10,
+          isigma = self.a,
+          fsigma = self.z/1000
+        )
 
         w             = np.array(Algorithm['best solution'])
         epoch_record = []
