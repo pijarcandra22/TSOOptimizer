@@ -1087,7 +1087,7 @@ class Bat_Optimizer:
       minimum = min(self.w_best)
       maximum = max(self.w_best)
 
-    Algorithm     = BatAlgorithm(self.D, self.NP, self.epoch, self.alpha, self.z, 0.0, self.tuna, -10.0, 10.0, self.Fun)
+    Algorithm     = BatAlgorithm(self.D, self.NP, (self.epoch*10), self.alpha, self.z, 0.0, self.tuna, (self.tuna*-10), (self.tuna*10),self.Fun)
     Algorithm.v   = self.fitur.values.tolist()
     Algorithm.Sol = self.fitur.values.tolist()
 
