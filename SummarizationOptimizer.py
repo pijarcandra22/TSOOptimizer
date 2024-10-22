@@ -1079,7 +1079,7 @@ class Bat_Optimizer:
     return scores[var_ext].precision
 
   def fit(self):
-    for epoch in self.epoch:
+    for epoch in range(self.epoch):
       if len(self.w_best) == 0:
         minimum = 0.5
         maximum = 0.5
