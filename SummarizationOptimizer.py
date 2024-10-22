@@ -1062,8 +1062,9 @@ class Bat_Optimizer:
 
   def Fun(self, D, sol):
     val = 0.0
+    random_val = random.random()
     for i in range(D):
-        val = val + sol[i] * sol[i]
+        val = val + sol[i] * sol[i] *random_val
     return val
 
   def jaccard_similarity(self,x,y):
