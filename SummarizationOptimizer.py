@@ -1433,7 +1433,7 @@ class IWO_Optimizer:
           pos = self.fitur.values.tolist(),
           ipop = self.tuna,
           mpop = self.tuna*10,
-          iter = self.epoch,smax = self.tuna,
+          iter = self.epoch,
           smin = minimum, smax = maximum,
           isigma = self.alpha,
           fsigma = self.z/100
