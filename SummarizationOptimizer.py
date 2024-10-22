@@ -1102,7 +1102,6 @@ class Bat_Optimizer:
         epoch_record.append(sum(self.fitur.loc[[data]].values.flatten()*w))
 
       self.df['epoch_'+str(epoch)+'_tuna_'+str(self.tuna)] = np.array(epoch_record)
-      print('epoch_'+str(epoch)+'_tuna_'+str(self.tuna))
       self.w_history['epoch_'+str(epoch)+'_tuna_'+str(self.tuna)] = w
 
       long_text_test = len(self.text_sample)
