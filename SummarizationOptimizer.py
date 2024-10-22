@@ -1094,11 +1094,10 @@ class Bat_Optimizer:
       Algorithm.best_bat()
 
       w             = np.array(Algorithm.best)
+      print("===========================")
+      print(w)
       epoch_record = []
-      for data in range(len(self.df)):
-        print("===========================")
-        print(self.fitur.loc[[data]].values.flatten())
-        print(w)
+      for data in range(len(self.df)):  
         epoch_record.append(sum(self.fitur.loc[[data]].values.flatten()*w))
 
       self.df['epoch_'+str(epoch)+'_tuna_'+str(self.tuna)] = np.array(epoch_record)
