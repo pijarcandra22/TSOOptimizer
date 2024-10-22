@@ -1423,17 +1423,18 @@ class IWO_Optimizer:
     for epoch in range(self.epoch):
       #refisi Tuna
         if len(self.w_best) == 0:
-          minimum = 0.5
-          maximum = 0.5
+          minimum = 0
+          maximum = 10
         else:
-          minimum = min(self.fitur.values.tolist())
-          maximum = max(self.fitur.values.tolist())
+          minimum = int(min(self.fitur.values.tolist())*100)
+          maximum = int(max(self.fitur.values.tolist())*100)
 
         Algorithm     = self.IWOAlgorithm(
           pos = self.fitur.values.tolist(),
           ipop = self.tuna,
           mpop = self.tuna*10,
-          iter = self.epoch*100,smax = self.tuna,
+          iter = self.epoch,smax = self.tuna,
+          smin = minimum, smax = maximum,
           isigma = self.alpha,
           fsigma = self.z/100
           )
