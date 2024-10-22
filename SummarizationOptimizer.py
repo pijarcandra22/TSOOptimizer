@@ -1426,8 +1426,8 @@ class IWO_Optimizer:
           minimum = 0
           maximum = 10
         else:
-          minimum = int(min(self.fitur.values.tolist())*100)
-          maximum = int(max(self.fitur.values.tolist())*100)
+          minimum = int(min(self.fitur.values.tolist())[0]*100)
+          maximum = int(max(self.fitur.values.tolist())[0]*100)
 
         Algorithm     = self.IWOAlgorithm(
           pos = self.fitur.values.tolist(),
