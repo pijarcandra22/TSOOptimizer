@@ -1435,8 +1435,8 @@ class IWO_Optimizer:
           mpop = self.tuna*10,
           iter = self.epoch,
           smin = minimum, smax = maximum,
-          isigma = self.alpha,
-          fsigma = self.z/100
+          isigma = random.random(),
+          fsigma = random.random()/100
           )
 
         w             = np.array(Algorithm['best solution'])
