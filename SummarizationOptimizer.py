@@ -2445,7 +2445,7 @@ class Transform_All_Algorithm:
     print(len(cosins))
     return sum(cosins)/len(pred)
   
-  def get_redundansi(self,df_clean,treshold=0):
+  def get_redundansi(self,df_clean,treshold=0,agregation="mean"):
     resp = requests.get('https://raw.githubusercontent.com/victoriasovereigne/tesaurus/master/dict.json')
     resp_dict = resp.json()
     Sinonim1 = []
@@ -2476,7 +2476,10 @@ class Transform_All_Algorithm:
             similarity = cosine_similarity(vectors[0], vectors[1])
             cosins.append(similarity[0][0])
 
-        hasil = sum(cosins)/len(cosins)
+        if agregation == "mean":
+          hasil = sum(cosins)/len(cosins)
+        elif agregation == "max":
+          hasil = max(cosins)
         if np.isnan(hasil):
           fitur4.append(0)
         else:
@@ -2525,7 +2528,7 @@ class Transform_All_Algorithm:
       'rougeL':scores['rougeL'].precision
     }
 
-  def transform(self,df,length_result=0,preprocessing = True, weigth=[],redudansi_treshold=0, answer_form = "standard"):
+  def transform(self,df,length_result=0,preprocessing = True, weigth=[],redudansi_treshold=0, answer_form = "standard",agregation="mean"):
     global DataFrame_Fit
     if preprocessing:
       print("Preprocessing Running")
@@ -2606,6 +2609,6 @@ class Transform_All_Algorithm:
       result_dict["coherence_by_sort"].append(self.get_coherence(text_sort.split(". ")))
       result_dict["coherence_by_point"].append(self.get_coherence(text_point.split(". ")))
       result_dict["coherence_by_datetime"].append(self.get_coherence(text_datetime))
-      result_dict["Redudansi"].append(self.get_redundansi(text_sort.split(". "),treshold=redudansi_treshold))
+      result_dict["Redudansi"].append(self.get_redundansi(text_sort.split(". "),treshold=redudansi_treshold),agregation=agregation)
 
     return result_dict
