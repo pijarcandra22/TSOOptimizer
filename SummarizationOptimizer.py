@@ -2602,6 +2602,8 @@ class Transform_All_Algorithm:
       result_dict["Refrence"].append(data['Ringkasan_Sample'].values[0])
       result_dict["Weight"].append(weigth)
 
+      print(text_sort)
+
       result_dict["rouge1"].append(scores['rouge1'])
       result_dict["rouge2"].append(scores['rouge2'])
       result_dict["rouge3"].append(scores['rouge3'])
