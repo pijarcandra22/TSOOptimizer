@@ -2611,6 +2611,6 @@ class Transform_All_Algorithm:
       result_dict["coherence_by_sort"].append(self.get_coherence(text_sort.split(". ")))
       result_dict["coherence_by_point"].append(self.get_coherence(text_point.split(". ")))
       result_dict["coherence_by_datetime"].append(self.get_coherence(text_datetime))
-      result_dict["Redudansi"].append(self.get_redundansi(text_sort.split(". "),treshold=redudansi_treshold),agregation=agregation)
+      result_dict["Redudansi"].append(self.get_redundansi(text_sort.split(". "),treshold=redudansi_treshold,agregation=agregation))
 
     return result_dict
