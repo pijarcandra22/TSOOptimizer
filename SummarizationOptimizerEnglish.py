@@ -9,7 +9,8 @@ from datetime import datetime
 
 import nltk
 from nltk.corpus import stopwords
-from nltk.stem import PorterStemmer
+from nltk.stem import LancasterStemmer
+
 from nltk.corpus import wordnet
 
 from sklearn.feature_extraction.text import TfidfVectorizer
