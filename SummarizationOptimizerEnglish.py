@@ -52,6 +52,10 @@ class Preprocessing:
         """Menghilangkan Url Tweet"""
         text = re.sub(r'http\S+', '', text)
         return text
+    
+    def steaming_text(self,sentence):
+        """Stemming Pada Text"""
+        return self.stemmer.stem(sentence)
 
     def username_free_text(self,text):
         """Menghilangkan Username User"""
