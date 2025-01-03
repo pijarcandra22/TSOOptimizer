@@ -619,46 +619,55 @@ class PreprocessTuna(FeatureExtraction):
       self.fitur1 = self.extrackFitur.fitur1
     except:
       self.fitur1 = self.extrackFitur.df_clean
+    print("Sukses Fitur 1")
 
     try:
       self.fitur2 = self.extrackFitur.fitur2
     except:
       self.fitur2 = self.extrackFitur.df_clean
+    print("Sukses Fitur 2") 
     
     try:
       self.fitur3 = self.extrackFitur.fitur3
     except:
       self.fitur3 = self.extrackFitur.df_clean
+    print("Sukses Fitur 3")
 
     try:
       self.fitur4 = self.extrackFitur.fitur4
     except:
       self.fitur4 = self.extrackFitur.df_clean
+    print("Sukses Fitur 4")
 
     try:  
       self.fitur5 = self.extrackFitur.fitur5
     except:
       self.fitur5 = self.extrackFitur.df_clean
+    print("Sukses Fitur 5")
 
     try:  
       self.fitur6 = self.extrackFitur.fitur6
     except:
       self.fitur6 = self.extrackFitur.df_clean
+    print("Sukses Fitur 6")
 
     try:  
       self.fitur7 = self.extrackFitur.fitur7
     except:
       self.fitur7 = self.extrackFitur.df_clean
+    print("Sukses Fitur 7")
 
     try:  
       self.fitur8 = self.extrackFitur.fitur8
     except:
       self.fitur8 = self.extrackFitur.df_clean
+    print("Sukses Fitur 8")
 
     try:  
       self.fitur9 = self.extrackFitur.fitur9
     except:
       self.fitur9 = self.extrackFitur.df_clean
+    print("Sukses Fitur 9")
 
     df_fiks = self.eliminasi_treshhold(df_fiks.replace({True: 1, False: 0}))
 
