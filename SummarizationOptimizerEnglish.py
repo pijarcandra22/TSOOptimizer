@@ -218,13 +218,21 @@ class FeatureExtraction(Preparation_Data):
     self.fitur8 = df_clean.copy()
     self.fitur9 = df_clean.copy()
 
+    print("Feature Extraction Steps")
     df_clean = self.Fitur1(df_clean)
+    print("Done Fitur 1")
     df_clean = self.Fitur2(df_clean)
+    print("Done Fitur 2")
     df_clean = self.Fitur3(df_clean)
+    print("Done Fitur 3")
     df_clean = self.Fitur4(df_clean)
+    print("Done Fitur 4")
     df_clean = self.Fitur5(df_clean)
+    print("Done Fitur 5")
     df_clean = self.Fitur6(df_clean)
+    print("Done Fitur 6")
     df_clean = self.Fitur7(df_clean)
+    print("Done Fitur 7")
     return self.Fitur8_fit(df_clean)
 
   def KemiripanJudul(self,judul,kalimat):
