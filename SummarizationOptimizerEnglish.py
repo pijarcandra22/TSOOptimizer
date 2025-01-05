@@ -218,7 +218,7 @@ class FeatureExtraction(Preparation_Data):
     self.fitur8 = df_clean.copy()
     self.fitur9 = df_clean.copy()
 
-    print("Feature Extraction Steps")
+    print("Feature Extraction")
     df_clean = self.Fitur1(df_clean)
     print("Done Fitur 1")
     df_clean = self.Fitur2(df_clean)
@@ -233,7 +233,9 @@ class FeatureExtraction(Preparation_Data):
     print("Done Fitur 6")
     df_clean = self.Fitur7(df_clean)
     print("Done Fitur 7")
-    return self.Fitur8_fit(df_clean)
+    df_clean = self.Fitur8_fit(df_clean)
+    print("Done Fitur 8")
+    return df_clean
 
   def KemiripanJudul(self,judul,kalimat):
     #Deklarasi Variabel Untuk menyimpan Jumlah kata yang sama dengan judul dan jumlah kata dalam judul
