@@ -877,7 +877,7 @@ class Tuna_Swamp_Optimizer:
     if len(weigth) == 0:
       weigth = self.w_best
     epoch_record = []
-    fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique()))-self.condition]
+    fitur = df_new.iloc[:,6:6+len(weigth)]
 
     print(fitur.columns)
     for data in range(len(df_new)):
@@ -1194,7 +1194,7 @@ class Bat_Optimizer:
     if len(weigth) == 0:
       weigth = self.w_best
     epoch_record = []
-    fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique()))-self.condition]
+    fitur = df_new.iloc[:,6:6+len(weigth)]
 
     print(fitur.columns)
     for data in range(len(df_new)):
@@ -1543,7 +1543,7 @@ class IWO_Optimizer:
     if len(weigth) == 0:
       weigth = self.w_best
     epoch_record = []
-    fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique()))-self.condition]
+    fitur = df_new.iloc[:,6:6+len(weigth)]
 
     print(fitur.columns)
     for data in range(len(df_new)):
@@ -1780,7 +1780,7 @@ class PSO_Optimizer:
     if len(weigth) == 0:
       weigth = self.w_best
     epoch_record = []
-    fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique()))-self.condition]
+    fitur = df_new.iloc[:,6:6+len(weigth)]
 
     print(fitur.columns)
     for data in range(len(df_new)):
@@ -2033,7 +2033,7 @@ class ABC_Optimizer:
     if len(weigth) == 0:
       weigth = self.w_best
     epoch_record = []
-    fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique()))-self.condition]
+    fitur = df_new.iloc[:,6:6+len(weigth)]
 
     print(fitur.columns)
     for data in range(len(df_new)):
@@ -2351,7 +2351,7 @@ class Whale_Optimizer(WOA):
     if len(weigth) == 0:
       weigth = self.w_best
     epoch_record = []
-    fitur = df_new.iloc[:,6:-(len(df_new['doc_id'].unique()))-self.condition]
+    fitur = df_new.iloc[:,6:6+len(weigth)]
 
     print(fitur.columns)
     for data in range(len(df_new)):
